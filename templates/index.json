@@ -35,6 +35,101 @@
         "sizing_type": "cover"
       }
     },
+    "mvd_icons_6KwMDh": {
+      "type": "mvd-icons",
+      "blocks": {
+        "icon_block_Ktjp6g": {
+          "type": "icon_block",
+          "settings": {
+            "icon_type": "image",
+            "preset_icon": "necklace",
+            "icon": "shopify://shop_images/earrings_1.png",
+            "label": "Aros",
+            "link": ""
+          }
+        },
+        "icon_block_bCxrkn": {
+          "type": "icon_block",
+          "settings": {
+            "icon_type": "image",
+            "preset_icon": "necklace",
+            "icon": "shopify://shop_images/jewellery.png",
+            "label": "Collares",
+            "link": ""
+          }
+        },
+        "icon_block_mwqExF": {
+          "type": "icon_block",
+          "settings": {
+            "icon_type": "image",
+            "preset_icon": "necklace",
+            "icon": "shopify://shop_images/bangles_1.png",
+            "label": "Pulseras",
+            "link": ""
+          }
+        },
+        "icon_block_mUC8gB": {
+          "type": "icon_block",
+          "settings": {
+            "icon_type": "image",
+            "preset_icon": "necklace",
+            "icon": "shopify://shop_images/jewelery_1.png",
+            "label": "Anillos",
+            "link": ""
+          }
+        },
+        "icon_block_p9EaRV": {
+          "type": "icon_block",
+          "settings": {
+            "icon_type": "image",
+            "preset_icon": "necklace",
+            "icon": "shopify://shop_images/pearl-necklace_1.png",
+            "label": "Tobilleras",
+            "link": ""
+          }
+        },
+        "icon_block_ktKx9G": {
+          "type": "icon_block",
+          "settings": {
+            "icon_type": "image",
+            "preset_icon": "necklace",
+            "icon": "shopify://shop_images/shoulder-bag_1.png",
+            "label": "Accesorios",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "icon_block_Ktjp6g",
+        "icon_block_bCxrkn",
+        "icon_block_mwqExF",
+        "icon_block_mUC8gB",
+        "icon_block_p9EaRV",
+        "icon_block_ktKx9G"
+      ],
+      "name": "MVD Icons",
+      "settings": {
+        "title": "Categorías",
+        "title_size_desktop": 14,
+        "title_size_mobile": 14,
+        "container_width": "container",
+        "columns_desktop": 6,
+        "columns_mobile": 3,
+        "gap_desktop": 20,
+        "gap_mobile": 20,
+        "tint_image_icons": true,
+        "bg_color": "#ffffff",
+        "text_color": "#7e4a2d",
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "padding_left": 100,
+        "padding_right": 100,
+        "padding_top_mb": 30,
+        "padding_bottom_mb": 30,
+        "padding_left_mb": 0,
+        "padding_right_mb": 0
+      }
+    },
     "93c72a6c-f37d-432e-8104-d1f2a08adc05": {
       "type": "product-list",
       "custom_css": [
@@ -127,9 +222,14 @@
         "layout": "full-width",
         "mobile_columns": 1,
         "desktop_columns": 3,
-        "enable_slider_desktop": false,
+        "enable_slider_desktop": true,
         "enable_slider_mobile": false,
         "slider_columns_desktop": 3,
+        "enable_infinite_scroll": true,
+        "enable_autoplay": true,
+        "autoplay_delay": 5,
+        "peek_offset_desktop": 0,
+        "peek_offset_mobile": 0,
         "gap_desktop": 20,
         "gap_mobile": 20,
         "padding_top": 50,
@@ -142,61 +242,6 @@
         "padding_right_mb": 0
       }
     },
-    "mvd_slider_DVYgcQ": {
-      "type": "mvd_slider",
-      "blocks": {
-        "slide_yJrnBp": {
-          "type": "slide",
-          "disabled": true,
-          "settings": {
-            "link_url": "shopify://collections/all"
-          }
-        }
-      },
-      "block_order": [
-        "slide_yJrnBp"
-      ],
-      "disabled": true,
-      "name": "MVD Slider",
-      "settings": {
-        "autoplay_speed": 3,
-        "animation_type": "fade",
-        "image_width": "full",
-        "sizing_type": "cover",
-        "height_desktop": 600,
-        "height_mobile": 400,
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "padding_top_mb": 0,
-        "padding_bottom_mb": 0
-      }
-    },
-    "mvd_videotext_8YYcFn": {
-      "type": "mvd-videotext",
-      "name": "MVD Video con Texto",
-      "settings": {
-        "layout": "container",
-        "video_source": "shopify",
-        "video_url": "https://cdn.shopify.com/videos/c/o/v/faef1e0567f6416881b82d294882bcf6.mp4",
-        "poster_image": "shopify://shop_images/IMG_1174.webp",
-        "instagram_embed_code": "",
-        "heading": "Vero Moreau  x Sandra Middleton",
-        "text": "<p>La colaboración entre Vero Moreau y Sandra middleton nace de un sueño hecho realidad, siempre quisimos crear algo atemporal, y único, una joya que transcienda en el tiempo, pensada para acompañarte todos los días. </p><p><br/>Estás piezas han sido diseñadas para brillar tanto en el look más simple como también en el más sofisticado y elegante. <br/>Cada joya cuenta una historia y esta está creada para que cuentes la tuya. <br/>Sandra y Vero</p>",
-        "button_text": "Ver más",
-        "button_url": "shopify://collections/vero-moreau-x-sandra-middleton",
-        "button_style": "primary",
-        "button_bg_color_primary": "#000000",
-        "button_text_color_primary": "#ffffff",
-        "button_bg_color_secondary": "#ffffff",
-        "button_text_color_secondary": "#000000",
-        "button_width": "auto",
-        "content_position": "right",
-        "padding_top": 60,
-        "padding_bottom": 60,
-        "padding_left": 20,
-        "padding_right": 20
-      }
-    },
     "1711952577a4b9e235": {
       "type": "apps",
       "settings": {
@@ -207,14 +252,37 @@
         "marginmobile": "0px 0px 0px 0px",
         "bgsection": "#ffffff"
       }
+    },
+    "mvd_product_1_MGFHgR": {
+      "type": "mvd_product_1",
+      "name": "MVD Product 1",
+      "settings": {
+        "featured_image": "shopify://shop_images/u2678577971_A_serene_and_stylish_woman_with_natural_curly_hai_15e54676-10ea-4f32-84af-3b93bd1e54a6_1.webp",
+        "image_position": "left",
+        "image_ratio": "square",
+        "subtitle": "Trends & Tradition",
+        "title": "For Everyday Wear",
+        "description": "From dainty classics that are perfect for daily adornment to chic, trendsetting pieces designed to complement any occasion - our selection blends exquisite craftsmanship with modern sensibility.",
+        "featured_product": "aros-argollas-indy-1",
+        "link_text": "Shop",
+        "link_url": "",
+        "layout_width": "full-width",
+        "bg_color": "#ffffff",
+        "text_color": "#1a1a1a",
+        "accent_color": "#1a1a1a",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mb": 0,
+        "padding_bottom_mb": 0
+      }
     }
   },
   "order": [
     "mvd_banner_TnKeCB",
+    "mvd_icons_6KwMDh",
     "93c72a6c-f37d-432e-8104-d1f2a08adc05",
     "mvd_collection_rCMHYP",
-    "mvd_slider_DVYgcQ",
-    "mvd_videotext_8YYcFn",
-    "1711952577a4b9e235"
+    "1711952577a4b9e235",
+    "mvd_product_1_MGFHgR"
   ]
 }

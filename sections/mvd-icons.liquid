@@ -9,6 +9,7 @@
   assign tint_icons = section.settings.tint_image_icons
   assign bg_color = section.settings.bg_color
   assign text_color = section.settings.text_color
+  assign accent_color = section.settings.accent_color
   assign columns_desktop = section.settings.columns_desktop
   assign columns_mobile = section.settings.columns_mobile
   assign padding_top = section.settings.padding_top
@@ -59,7 +60,7 @@
             {% else %}
               {% if block.settings.icon != blank %}
                 {% if tint_icons %}
-                  <div class="mvd-icon-image-tinted" style="-webkit-mask-image: url({{ block.settings.icon | image_url: width: 200 }}); mask-image: url({{ block.settings.icon | image_url: width: 200 }}); background-color: {{ text_color }};"></div>
+                  <div class="mvd-icon-image-tinted" style="-webkit-mask-image: url({{ block.settings.icon | image_url: width: 200 }}); mask-image: url({{ block.settings.icon | image_url: width: 200 }}); background-color: {{ accent_color }};"></div>
                 {% else %}
                   <img src="{{ block.settings.icon | image_url: width: 200 }}" 
                        alt="{{ block.settings.label | escape }}" 
@@ -150,11 +151,11 @@
   .mvd-icon-item {
     text-align: center;
     width: 100%;
-    transition: transform 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   }
 
   .mvd-icon-item:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
   }
 
   .mvd-icon-link {
@@ -170,13 +171,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
+    overflow: visible;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .mvd-icon-item:hover .mvd-icon-image-wrapper {
+    transform: scale(1.15);
   }
 
   .mvd-icon-image-wrapper svg {
     width: 100%;
     height: 100%;
-    stroke: {{ text_color }};
+    stroke: {{ accent_color }};
+    transition: stroke 0.3s ease;
   }
 
   .mvd-icon-image-tinted {
@@ -188,19 +195,28 @@
     mask-size: contain;
     -webkit-mask-position: center;
     mask-position: center;
+    transition: background-color 0.3s ease;
   }
 
   .mvd-icon-image {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
+    transition: transform 0.4s ease;
   }
 
   .mvd-icon-label {
     display: block;
     font-size: 0.9rem;
     font-style: italic;
-    opacity: 0.8;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+    letter-spacing: 0.05em;
+  }
+
+  .mvd-icon-item:hover .mvd-icon-label {
+    opacity: 1;
+    transform: translateY(2px);
   }
 
   .placeholder-svg {
@@ -309,8 +325,14 @@
     {
       "type": "color",
       "id": "text_color",
-      "label": "Color de Texto",
+      "label": "Color de Texto (Títulos y Etiquetas)",
       "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Color de Iconos (Acento)",
+      "default": "#1a1a1a"
     },
     {
       "type": "header",

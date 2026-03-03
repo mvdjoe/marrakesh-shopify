@@ -49,11 +49,38 @@
                     {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
                   </div>
                 {% endif %}
-              </div>
 
-              {% if link_url != blank %}
-                </a>
-              {% endif %}
+                {% comment %} Overlay and Content Unified {% endcomment %}
+                {% liquid
+                   assign overlay_opacity = block.settings.overlay_opacity | times: 0.01 
+                   assign has_content = false
+                   if block.settings.title != blank or block.settings.text != blank or block.settings.button_label != blank
+                     assign has_content = true
+                   endif
+                %}
+                
+                <div class="mvd-banner-overlay" style="opacity: {{ overlay_opacity }};"></div>
+                
+                {% if has_content %}
+                  <div class="mvd-banner-content anim--{{ block.settings.text_animation | default: 'none' }}">
+                    {% if block.settings.title != blank %}
+                      <h2 class="mvd-banner-title" style="color: {{ block.settings.title_color | default: '#ffffff' }};">{{ block.settings.title }}</h2>
+                    {% endif %}
+                    {% if block.settings.text != blank %}
+                      <div class="mvd-banner-text" style="color: {{ block.settings.text_color | default: '#ffffff' }};">{{ block.settings.text }}</div>
+                    {% endif %}
+                    {% if block.settings.button_label != blank %}
+                      <a href="{{ block.settings.button_link | default: block.settings.link_url }}" class="mvd-banner-button">
+                        {{ block.settings.button_label }}
+                      </a>
+                    {% endif %}
+                  </div>
+                {% endif %}
+
+                {%- if link_url != blank and block.settings.button_label == blank -%}
+                  <a href="{{ link_url }}" class="mvd-banner-link-overlay"></a>
+                {%- endif -%}
+              </div>
 
             {%- when 'video' -%}
               {% comment %} VIDEO SLIDE {% endcomment %}
@@ -62,6 +89,11 @@
                 assign video_mobile = block.settings.video_mobile
                 assign link_url = block.settings.link_url
                 assign overlay_opacity = block.settings.overlay_opacity | times: 0.01
+                
+                assign has_content = false
+                if block.settings.title != blank or block.settings.text != blank or block.settings.button_label != blank
+                  assign has_content = true
+                endif
               -%}
 
               <div class="mvd-banner-media-container">
@@ -84,8 +116,24 @@
                 </div>
 
                 <div class="mvd-banner-overlay" style="opacity: {{ overlay_opacity }};"></div>
+
+                {% if has_content %}
+                  <div class="mvd-banner-content anim--{{ block.settings.text_animation | default: 'none' }}">
+                    {% if block.settings.title != blank %}
+                      <h2 class="mvd-banner-title" style="color: {{ block.settings.title_color | default: '#ffffff' }};">{{ block.settings.title }}</h2>
+                    {% endif %}
+                    {% if block.settings.text != blank %}
+                      <div class="mvd-banner-text" style="color: {{ block.settings.text_color | default: '#ffffff' }};">{{ block.settings.text }}</div>
+                    {% endif %}
+                    {% if block.settings.button_label != blank %}
+                      <a href="{{ block.settings.button_link | default: block.settings.link_url }}" class="mvd-banner-button">
+                        {{ block.settings.button_label }}
+                      </a>
+                    {% endif %}
+                  </div>
+                {% endif %}
                 
-                {%- if link_url != blank -%}
+                {%- if link_url != blank and block.settings.button_label == blank -%}
                   <a href="{{ link_url }}" class="mvd-banner-link-overlay"></a>
                 {%- endif -%}
               </div>
@@ -253,6 +301,109 @@
     align-items: center;
     color: #666;
   }
+
+  /* Content Styling */
+  .mvd-banner-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 15;
+    text-align: center;
+    width:calc(100% - 40px);
+    max-width: 800px;
+    color: #ffffff;
+    pointer-events: none;
+  }
+
+  .mvd-banner-content * {
+    pointer-events: auto;
+  }
+
+  .mvd-banner-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 0 0 1rem 0;
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  .mvd-banner-text {
+    font-size: 1.25rem;
+    margin: 0 0 2rem 0;
+    line-height: 1.5;
+  }
+
+  .mvd-banner-text p {
+    color: inherit !important;
+    margin: 0;
+  }
+
+  .mvd-banner-button {
+    display: inline-block;
+    padding: 12px 35px;
+    background-color: #ffffff;
+    color: #000000;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+  }
+
+  .mvd-banner-button:hover {
+    background-color: #000000;
+    color: #ffffff;
+  }
+
+  @media screen and (max-width: 767px) {
+    .mvd-banner-title {
+      font-size: 2rem;
+    }
+    .mvd-banner-text {
+      font-size: 1rem;
+    }
+  }
+
+  /* Animations for Content */
+  .mvd-banner-content.anim--fade-in { opacity: 0; }
+  .mvd-banner-slide.active .mvd-banner-content.anim--fade-in {
+    animation: fadeInContent 1s ease forwards;
+    animation-delay: 0.5s;
+    opacity: 1;
+  }
+
+  .mvd-banner-content.anim--slide-up { transform: translate(-50%, 0%); opacity: 0; }
+  .mvd-banner-slide.active .mvd-banner-content.anim--slide-up {
+    animation: slideUpContent 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+    animation-delay: 0.5s;
+    opacity: 1;
+  }
+
+  .mvd-banner-content.anim--zoom-in { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+  .mvd-banner-slide.active .mvd-banner-content.anim--zoom-in {
+    animation: zoomInContent 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+    animation-delay: 0.5s;
+    opacity: 1;
+  }
+
+  @keyframes fadeInContent {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideUpContent {
+    from { transform: translate(-50%, 20%); opacity: 0; }
+    to { transform: translate(-50%, -50%); opacity: 1; }
+  }
+
+  @keyframes zoomInContent {
+    from { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+    to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  }
 </style>
 
 <script>
@@ -378,7 +529,7 @@
 
 {% schema %}
 {
-  "name": "MVD Banner",
+  "name": "MVD Banner 2",
   "tag": "section",
   "class": "mvd-banner-section",
   "settings": [
@@ -465,6 +616,70 @@
           "unit": "px",
           "label": "Altura Móvil",
           "default": 400
+        },
+        {
+          "type": "header",
+          "content": "Contenido"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Título del Banner"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Cuerpo de texto",
+          "default": "<p>Escribe aquí la descripción de tu banner.</p>"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Etiqueta del botón"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Enlace del botón"
+        },
+        {
+          "type": "header",
+          "content": "Estilos de Texto"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Color del Título",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Color del Texto",
+          "default": "#ffffff"
+        },
+        {
+          "type": "select",
+          "id": "text_animation",
+          "label": "Animación de Texto",
+          "default": "none",
+          "options": [
+            { "value": "none", "label": "Ninguna" },
+            { "value": "fade-in", "label": "Aparecer" },
+            { "value": "slide-up", "label": "Deslizar hacia arriba" },
+            { "value": "zoom-in", "label": "Zoom" }
+          ]
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "%",
+          "label": "Opacidad del Overlay",
+          "default": 0
         }
       ]
     },
@@ -486,6 +701,60 @@
           "type": "url",
           "id": "link_url",
           "label": "Enlace"
+        },
+        {
+          "type": "header",
+          "content": "Contenido"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Título del Banner"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Cuerpo de texto",
+          "default": "<p>Escribe aquí la descripción de tu vídeo.</p>"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Etiqueta del botón"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Enlace del botón"
+        },
+        {
+          "type": "header",
+          "content": "Estilos de Texto"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Color del Título",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Color del Texto",
+          "default": "#ffffff"
+        },
+        {
+          "type": "select",
+          "id": "text_animation",
+          "label": "Animación de Texto",
+          "default": "none",
+          "options": [
+            { "value": "none", "label": "Ninguna" },
+            { "value": "fade-in", "label": "Aparecer" },
+            { "value": "slide-up", "label": "Deslizar hacia arriba" },
+            { "value": "zoom-in", "label": "Zoom" }
+          ]
         },
         {
           "type": "range",
@@ -522,7 +791,7 @@
   ],
   "presets": [
     {
-      "name": "MVD Banner",
+      "name": "MVD Banner 2",
       "blocks": [
         { "type": "slide" }
       ]

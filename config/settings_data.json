@@ -1599,7 +1599,7 @@
           "size_icon": 16,
           "speed": 30,
           "scroll_type": "from-right",
-          "background": "#b29bf5",
+          "background": "#faece4",
           "gradient_bg": "",
           "text": "#000000",
           "link_color": "#ffffff",

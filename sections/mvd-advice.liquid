@@ -1,0 +1,249 @@
+{% comment %}
+  mvd-advice.liquid
+  Section for a seamless infinite scrolling text marquee (promotional scroller).
+{% endcomment %}
+
+{%- liquid
+  assign speed = section.settings.speed | default: 30
+  assign pause_on_hover = section.settings.pause_on_hover
+  assign bg_color = section.settings.bg_color
+  assign text_color = section.settings.text_color
+  assign font_size_desktop = section.settings.font_size_desktop
+  assign font_size_mobile = section.settings.font_size_mobile
+  assign gap = section.settings.gap
+  assign uppercase = section.settings.uppercase
+  assign padding_v = section.settings.padding_vertical
+-%}
+
+<style>
+  #mvd-advice-{{ section.id }} {
+    background: {{ bg_color }};
+    padding: {{ padding_v }}px 0;
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    border-top: 1px solid rgba(0,0,0,0.05);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+
+  .mvd-advice-marquee-wrapper {
+    display: flex;
+    overflow: hidden;
+    user-select: none;
+    gap: {{ gap }}px;
+  }
+
+  .mvd-advice-marquee {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: {{ gap }}px;
+    min-width: 100%;
+    animation: mvd-marquee {{ speed }}s linear infinite;
+  }
+
+  {% if pause_on_hover %}
+  #mvd-advice-{{ section.id }}:hover .mvd-advice-marquee {
+    animation-play-state: paused;
+  }
+  {% endif %}
+
+  .mvd-advice-item {
+    font-size: {{ font_size_desktop }}px;
+    color: {{ text_color }};
+    white-space: nowrap;
+    font-weight: 500;
+    {% if uppercase %}text-transform: uppercase;{% endif %}
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .mvd-advice-item:hover {
+    opacity: 0.7;
+  }
+
+  .mvd-advice-separator {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: {{ text_color }};
+    opacity: 0.3;
+    margin: 0 {{ gap | divided_by: 2 }}px;
+  }
+
+  @keyframes mvd-marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(-100% - {{ gap }}px)); }
+  }
+
+  @media (max-width: 767px) {
+    .mvd-advice-item {
+      font-size: {{ font_size_mobile }}px;
+    }
+    #mvd-advice-{{ section.id }} {
+      padding: {{ padding_v | divided_by: 1.5 }}px 0;
+    }
+  }
+</style>
+
+<div id="mvd-advice-{{ section.id }}" class="mvd-advice-section">
+  <div class="mvd-advice-marquee-wrapper">
+    {%- capture marquee_content -%}
+      {%- for block in section.blocks -%}
+        {%- if block.settings.text != blank -%}
+          {%- if block.settings.link != blank -%}
+            <a href="{{ block.settings.link }}" class="mvd-advice-item" {{ block.shopify_attributes }}>
+          {%- else -%}
+            <span class="mvd-advice-item" {{ block.shopify_attributes }}>
+          {%- endif -%}
+            
+            {{ block.settings.text }}
+            
+          {%- if block.settings.link != blank -%}
+            </a>
+          {%- else -%}
+            </span>
+          {%- endif -%}
+          <span class="mvd-advice-separator"></span>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endcapture -%}
+
+    <div class="mvd-advice-marquee">
+      {{ marquee_content }}
+    </div>
+    {% comment %} Duplicate for seamless loop {% endcomment %}
+    <div class="mvd-advice-marquee" aria-hidden="true">
+      {{ marquee_content }}
+    </div>
+    {% comment %} Triplicate for very large screens or fast speeds {% endcomment %}
+    <div class="mvd-advice-marquee" aria-hidden="true">
+      {{ marquee_content }}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "MVD Advice (Marquee)",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Estilo"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de Fondo",
+      "default": "#f9f9f9"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color de Texto",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "range",
+      "id": "font_size_desktop",
+      "min": 10,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de Fuente Desktop",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "font_size_mobile",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Tamaño de Fuente Móvil",
+      "default": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "uppercase",
+      "label": "Todo en Mayúsculas",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Configuración del Scroll"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "min": 5,
+      "max": 100,
+      "step": 5,
+      "unit": "s",
+      "label": "Velocidad (Segundos por ciclo)",
+      "default": 30,
+      "info": "Menos segundos = más rápido"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "min": 20,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Espacio entre mensajes",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_vertical",
+      "min": 5,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Vertical",
+      "default": 15
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pausar al pasar el ratón",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text_block",
+      "name": "Mensaje Promocional",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Texto",
+          "default": "¡Nueva Colección Disponible!"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Enlace (Opcional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "MVD Advice (Marquee)",
+      "blocks": [
+        { "type": "text_block", "settings": { "text": "¡ENVÍO GRATIS EN COMPRAS SUPERIORES A $100.000!" } },
+        { "type": "text_block", "settings": { "text": "SOLO POR HOY: 15% DE DESCUENTO EN TODO EL SITIO" } },
+        { "type": "text_block", "settings": { "text": "NUEVAS PIEZAS DE JOYERÍA ARTESANAL" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
