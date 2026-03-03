@@ -41,7 +41,7 @@
       "name": "MVD Banner 1",
       "settings": {
         "show_scroll_button": true,
-        "autoplay_speed": 8,
+        "autoplay_speed": 15,
         "animation_type": "zoom-out",
         "section_width": "full",
         "sizing_type": "cover"
@@ -124,7 +124,7 @@
         "title": "Categorías",
         "title_size_desktop": 14,
         "title_size_mobile": 14,
-        "container_width": "container",
+        "container_width": "container-fluid",
         "columns_desktop": 6,
         "columns_mobile": 3,
         "gap_desktop": 20,
@@ -135,8 +135,8 @@
         "accent_color": "#c89262",
         "padding_top": 65,
         "padding_bottom": 50,
-        "padding_left": 20,
-        "padding_right": 20,
+        "padding_left": 0,
+        "padding_right": 0,
         "padding_top_mb": 60,
         "padding_bottom_mb": 40,
         "padding_left_mb": 20,
@@ -360,29 +360,26 @@
         "pause_on_hover": true
       }
     },
-    "before_after_jetygq": {
-      "type": "before-after",
-      "name": "Before/After Image",
+    "mvd_before_after_dkr9Xe": {
+      "type": "mvd-before-after",
+      "name": "MVD Before/After",
       "settings": {
-        "animation": "",
-        "setwidth": "full",
-        "bgsection": "#ffffff",
-        "title_top": "",
-        "title": "",
-        "des": "",
-        "align-heading": "center",
-        "image": "shopify://shop_images/7033e843046c821f97ce3d3bcb6357a2.jpg",
-        "image2": "shopify://shop_images/b97ffaa62d6dbc60a46efa5efa1e45a8.jpg",
-        "text_before": "Before",
-        "text_after": "After",
-        "paddingsection": "0px 0px 0px 0px",
-        "paddingmobile": "40px 0px 40px 0px",
-        "marginsection": "0px 0px 0px 0px",
-        "marginmobile": "0px 0px 0px 0px"
+        "before_image": "shopify://shop_images/7033e843046c821f97ce3d3bcb6357a2.jpg",
+        "before_label": "Antes",
+        "after_image": "shopify://shop_images/descarga.png",
+        "after_label": "Después",
+        "container_width": "container-fluid",
+        "image_ratio": "natural",
+        "section_height": 600,
+        "section_height_mb": 400,
+        "handle_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "93c72a6c-f37d-432e-8104-d1f2a08adc05": {
       "type": "product-list",
+      "disabled": true,
       "custom_css": [
         "@media (max-width: 576px) {.product-card__name {padding-top: 20px; }}"
       ],
@@ -411,6 +408,30 @@
         "paddingmobile": "20px 0px 0px 0px",
         "marginsection": "0px 0px 0px 0px",
         "marginmobile": "0px 0px 0px 0px"
+      }
+    },
+    "mvd_product_list_ALK7LQ": {
+      "type": "mvd-product-list",
+      "name": "MVD Product List",
+      "settings": {
+        "animation": "",
+        "setwidth": "container-fluid",
+        "bg_color": "#ffffff",
+        "subtitle": "NEW IN",
+        "title": "",
+        "title_size": 20,
+        "subtitle_size": 15,
+        "des": "",
+        "align-heading": "center",
+        "collection": "aros",
+        "limit": 10,
+        "perviewDesktop": 5,
+        "spaceBetween": 20,
+        "nowrap": false,
+        "arrows": true,
+        "scrollbar": false,
+        "paddingsection": "30px 0px 20px 0px",
+        "paddingmobile": "40px 0px 40px 0px"
       }
     },
     "mvd_banner_2_DCqdjq": {
@@ -454,8 +475,9 @@
     "mvd_product_2_NG4wYn",
     "mvd_collection_rCMHYP",
     "mvd_advice_awpLjn",
-    "before_after_jetygq",
+    "mvd_before_after_dkr9Xe",
     "93c72a6c-f37d-432e-8104-d1f2a08adc05",
+    "mvd_product_list_ALK7LQ",
     "mvd_banner_2_DCqdjq"
   ]
 }
