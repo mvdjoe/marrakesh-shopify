@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "container": 1440,
@@ -1590,9 +1599,10 @@
           "size_icon": 16,
           "speed": 30,
           "scroll_type": "from-right",
-          "background": "#222222",
+          "background": "#ffffff",
           "gradient_bg": "",
-          "text": "#ffffff",
+          "text": "#000000",
+          "link_color": "#ffffff",
           "text_left": "",
           "enable_language_selector": false
         }
@@ -2016,9 +2026,9 @@
         "type": "header",
         "custom_css": [],
         "settings": {
-          "logo_home": "shopify://shop_images/logowhite.png",
-          "logo_general": "shopify://shop_images/Logo_S._Middleton_ce7704da-d279-44fc-8f23-7445d33fbed7.avif",
-          "logo_max_width": 200,
+          "logo_home": "shopify://shop_images/Logo_White.webp",
+          "logo_general": "shopify://shop_images/Logo_Black.webp",
+          "logo_max_width": 105,
           "enable_transparent": true,
           "hover_transparent": false,
           "enable_white": false,
