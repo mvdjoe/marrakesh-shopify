@@ -2172,9 +2172,9 @@
           "payment_info": "img",
           "copyright": false,
           "customcopyright": "© Sandra Middleton Joyas - 2025",
-          "padding_top": 40,
+          "padding_top": 60,
           "padding_bottom": 0,
-          "m_padding_top": 40,
+          "m_padding_top": 60,
           "m_padding_bottom": 0
         }
       },
@@ -2302,7 +2302,7 @@
           "image": "shopify://shop_images/741D4A47-4C92-470F-AC9D-6891D28B4E43.jpg",
           "title": "¡Estamos de vacaciones!",
           "subtitle": "<p></p><p></p><p>Debido a una pausa por <strong>vacaciones,</strong> los pedidos serán enviados después del<strong> 22 de Septiembre.</strong></p>",
-          "frequency": "never"
+          "frequency": "always"
         }
       }
     },
