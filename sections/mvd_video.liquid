@@ -1,0 +1,159 @@
+{% comment %}
+  Esta es la sección "MVD Video". Permite agregar un video como banner
+  para escritorio y móvil, con un enlace clickeable.
+{% endcomment %}
+
+{% comment %}
+  Obtenemos las opciones de configuración de la sección para
+  aplicar los estilos de manera dinámica.
+{% endcomment %}
+{% liquid
+  assign section_width_type = section.settings.section_width_type
+  assign overlay_opacity = section.settings.overlay_opacity | times: 0.01
+%}
+
+<div class="video-banner"
+     {% if section_width_type == 'box' %}style="max-width: 1200px; margin: 0 auto;"{% endif %}
+     {% if section_width_type == 'container_fluid' %}style="max-width: 100%; padding: 0 15px;"{% endif %}>
+  
+  {% comment %} Contenedor del video de escritorio {% endcomment %}
+  <div class="video-banner__desktop">
+    {%- if section.settings.video_desktop != blank -%}
+      {{ section.settings.video_desktop | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, class: 'video-banner__media' }}
+    {%- endif -%}
+  </div>
+
+  {% comment %} Contenedor del video móvil {% endcomment %}
+  <div class="video-banner__mobile">
+    {%- if section.settings.video_mobile != blank -%}
+      {{ section.settings.video_mobile | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, class: 'video-banner__media' }}
+    {%- endif -%}
+  </div>
+
+  {% comment %} Superposición (overlay) con opacidad ajustable {% endcomment %}
+  <div class="video-banner__overlay" style="opacity: {{ overlay_opacity }};"></div>
+  
+  {% comment %} Enlace que cubre el video completo {% endcomment %}
+  {%- if section.settings.link_url != blank -%}
+    <a href="{{ section.settings.link_url }}" class="video-banner__link"></a>
+  {%- endif -%}
+</div>
+
+<style>
+  /* Estilos para el contenedor principal de la sección */
+  .video-banner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  /* Estilos para el video */
+  .video-banner video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Estilos para el overlay (superposición) */
+  .video-banner__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000; /* Color del overlay, por defecto negro */
+    z-index: 5; /* Asegura que esté por encima del video pero debajo del enlace */
+  }
+
+  /* Oculta el contenedor del video móvil por defecto (para escritorio) */
+  .video-banner__mobile {
+    display: none;
+  }
+
+  /* Media query para pantallas más pequeñas (móviles) */
+  @media screen and (max-width: 767px) {
+    /* Oculta el contenedor del video de escritorio en móviles */
+    .video-banner__desktop {
+      display: none;
+    }
+    /* Muestra el contenedor del video móvil en móviles */
+    .video-banner__mobile {
+      display: block;
+    }
+  }
+
+  /* Estilos para el enlace que cubre todo el video */
+  .video-banner__link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+  }
+</style>
+
+{% schema %}{
+  "name": "MVD Video",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Videos"
+    },
+    {
+      "type": "video",
+      "id": "video_desktop",
+      "label": "Video para escritorio"
+    },
+    {
+      "type": "video",
+      "id": "video_mobile",
+      "label": "Video para móvil"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Enlace del video"
+    },
+    {
+      "type": "header",
+      "content": "Opciones de diseño"
+    },
+    {
+      "type": "select",
+      "id": "section_width_type",
+      "label": "Ancho de la sección",
+      "default": "full",
+      "options": [
+        {
+          "value": "full",
+          "label": "Full"
+        },
+        {
+          "value": "container_fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "box",
+          "label": "Box"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Opacidad del Overlay",
+      "default": 30
+    }
+  ],
+  "presets": [
+    {
+      "name": "MVD Video"
+    }
+  ]
+}{% endschema %}

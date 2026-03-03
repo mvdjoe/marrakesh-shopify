@@ -1,0 +1,60 @@
+/* --- S. MIDDLETON: Custom Theme Integration --- */
+
+/* 1. Global Hides */
+.progress-wrap.active-progress,
+#cookie-policy {
+  display: none !important;
+}
+
+/* 2. Mini Cart & Totals */
+.mini-cart-taxes {
+  font-size: 100%;
+}
+
+.mini-cart-meta {
+  font-size: 16px;
+}
+
+.bottom-total {
+  font-family: montserrat, sans-serif;
+  font-size: 18px;
+}
+
+/* 3. Header: Search and Account Hides (Global) */
+.modal__toggle-search-mobile,
+.site-header__search-mobile,
+.header__icon--search.d-lg-none,
+.header__search,
+.site-header__search-wrap,
+.site-account,
+.header--acount,
+.site-header__link.site-account,
+.js-open-login {
+  display: none !important;
+}
+
+
+/* 5. Home Page Icons - White Color */
+body.template-index .svg-cart,
+body.template-index .site-header__cart-indicator,
+body.template-index .toggle-menu-mobile button,
+body.template-index .modal__toggle-open {
+  color: #ffffff !important;
+}
+
+
+/* 6. Section Specific Tweaks */
+.announcement-slide {
+  border-bottom: 0px !important;
+}
+
+.icon-arrow {
+  display: none !important;
+}
+
+@media only screen and (max-width: 767px) {
+  .footer-center .logofooter {
+    margin-left: initial !important;
+    margin-right: auto !important;
+  }
+}

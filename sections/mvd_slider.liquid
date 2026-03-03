@@ -1,0 +1,494 @@
+{% comment %}
+  mvd_slider.liquid
+  This section creates a customizable slideshow with image and URL settings for each slide.
+  Now with a subtle zoom-out effect, mobile swipe gestures, width options, and image sizing.
+{% endcomment %}
+
+{%- liquid
+  assign animation_type = section.settings.animation_type
+  assign autoplay_speed = section.settings.autoplay_speed | times: 1000
+  assign image_width = section.settings.image_width
+  assign sizing_type = section.settings.sizing_type
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign padding_top_mb = section.settings.padding_top_mb
+  assign padding_bottom_mb = section.settings.padding_bottom_mb
+  assign height_desktop = section.settings.height_desktop
+  assign height_mobile = section.settings.height_mobile
+-%}
+
+<div id="mvd-slider-{{ section.id }}" class="mvd-slider-section {{ 'width--' | append: image_width }}">
+  {%- if section.blocks.size > 0 -%}
+    <div class="mvd-slider-wrapper {{ 'animation--' | append: animation_type }}" data-autoplay-speed="{{ autoplay_speed }}">
+      {% for block in section.blocks %}
+        {%- liquid
+          assign desktop_image = block.settings.image_desktop
+          assign mobile_image = block.settings.image_mobile
+          assign link_url = block.settings.link_url
+        -%}
+
+        <div class="mvd-slider-slide{% if forloop.first %} active{% endif %}" {{ block.shopify_attributes }}>
+          {% if link_url != blank %}
+            <a href="{{ link_url }}" class="mvd-slider-link">
+          {% endif %}
+
+          <div class="mvd-slider-image-container">
+            {% if desktop_image != blank %}
+              <picture>
+                {% if mobile_image != blank %}
+                  <source media="(max-width: 768px)" srcset="{{ mobile_image | image_url: width: 768 }}">
+                {% endif %}
+                <img src="{{ desktop_image | image_url: width: 1920 }}"
+                     alt="{{ desktop_image.alt | default: 'Slider Image' }}"
+                     class="mvd-slider-image {{ 'sizing--' | append: sizing_type }}">
+              </picture>
+            {% else %}
+              <div class="mvd-slider-placeholder">
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+            {% endif %}
+          </div>
+
+          {% if link_url != blank %}
+            </a>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  {%- else -%}
+    <div class="mvd-slider-no-blocks">
+      <div class="placeholder-content">
+        {{ 'homepage.onboarding.no_content' | t }}
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+<style>
+  /* ====== CÓDIGO CSS DEL SLIDER (COPIA ESTO EN TU CSS PRINCIPAL O EN UN ARCHIVO CSS DEDICADO) ====== */
+
+  #mvd-slider-{{ section.id }} {
+    padding-top: {{ padding_top }}px;
+    padding-bottom: {{ padding_bottom }}px;
+  }
+
+  @media (max-width: 768px) {
+    #mvd-slider-{{ section.id }} {
+      padding-top: {{ padding_top_mb }}px;
+      padding-bottom: {{ padding_bottom_mb }}px;
+    }
+  }
+
+  .mvd-slider-section {
+    margin: 0;
+  }
+
+  /* Ancho de página estándar */
+  .width--page-width {
+    max-width: var(--page-width);
+    margin: 0 auto;
+  }
+  
+  /* Ancho completo sin márgenes */
+  .width--full .mvd-slider-wrapper {
+    width: 100%;
+  }
+
+  /* Ancho fijo para escritorio */
+  .width--fixed {
+    max-width: 960px; /* Ancho fijo de ejemplo */
+    margin: 0 auto;
+  }
+  
+  .width--fixed-extended {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .mvd-slider-wrapper {
+    position: relative;
+    overflow: hidden;
+    touch-action: pan-y;
+    min-height: {{ height_desktop }}px;
+    height: {{ height_desktop }}px;
+  }
+
+  @media (max-width: 768px) {
+    .mvd-slider-wrapper {
+      min-height: {{ height_mobile }}px;
+      height: {{ height_mobile }}px;
+    }
+  }
+
+  .mvd-slider-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s ease-in-out;
+  }
+  .mvd-slider-slide.active {
+    opacity: 1;
+    visibility: visible;
+    position: relative;
+  }
+  .mvd-slider-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .mvd-slider-image-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  .mvd-slider-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Valor por defecto */
+    transform: scale(1);
+    transition: transform 1.8s cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  .mvd-slider-slide.active .mvd-slider-image {
+    transform: scale(1);
+  }
+
+  /* --- Opciones de ajuste de imagen --- */
+  .mvd-slider-image.sizing--cover {
+    object-fit: cover;
+  }
+  .mvd-slider-image.sizing--contain {
+    object-fit: contain;
+  }
+
+  /* --- Animaciones --- */
+  
+  /* Zoom-out */
+  .animation--zoom-out .mvd-slider-slide.active .mvd-slider-image {
+    transform: scale(1);
+    animation: zoom-out-animation 1.8s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+  }
+  @keyframes zoom-out-animation {
+    from {
+      transform: scale(1.1);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+
+  /* Fade */
+  .animation--fade .mvd-slider-slide {
+    transition: opacity 1.5s ease-in-out;
+  }
+  
+  /* Slide-in-left */
+  .animation--slide-in-left .mvd-slider-slide {
+    transform: translateX(100%);
+    transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+  }
+  .animation--slide-in-left .mvd-slider-slide.active {
+    transform: translateX(0);
+  }
+  
+  .mvd-slider-no-blocks {
+    padding: 50px 0;
+    text-align: center;
+    background-color: #f8f8f8;
+  }
+  .mvd-slider-placeholder {
+    width: 100%;
+    height: 400px;
+    background-color: #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* ====== CÓDIGO PARA EL HEADER TRANSPARENTE EN MÓVIL ====== */
+  /* Debes COPIAR ESTE BLOQUE y PEGÁRLO en tu archivo header.liquid o en tu CSS principal. */
+  /* Recuerda reemplazar ".nombre-de-tu-header" con la clase real de tu encabezado. */
+
+  @media (max-width: 768px) {
+    /* Ejemplo, si tu header tiene la clase '.site-header' o '.header' */
+    .site-header, .header-wrapper {
+      background-color: transparent !important;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 10;
+    }
+
+    /* Puedes necesitar ajustar el color de los elementos del menú para que sean visibles */
+    .site-header .header__menu-item,
+    .site-header .header__icon,
+    .site-header .header__logo {
+      color: #ffffff;
+      fill: #ffffff;
+    }
+  }
+
+</style>
+
+<script>
+  /* ====== CÓDIGO JAVASCRIPT DEL SLIDER (COPIA Y PEGA ESTO) ====== */
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const sliderWrapper = document.querySelector('.mvd-slider-wrapper');
+    if (!sliderWrapper) return;
+
+    const slides = sliderWrapper.querySelectorAll('.mvd-slider-slide');
+    if (slides.length <= 1) {
+      if (slides.length === 1) slides[0].classList.add('active');
+      return;
+    }
+    
+    let currentSlide = 0;
+    let autoplayInterval;
+    const autoplaySpeed = parseInt(sliderWrapper.dataset.autoplaySpeed, 10);
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    function showSlide(index) {
+      slides.forEach(slide => slide.classList.remove('active'));
+      slides[index].classList.add('active');
+    }
+
+    function startAutoplay() {
+      stopAutoplay();
+      autoplayInterval = setInterval(() => {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+      }, autoplaySpeed);
+    }
+
+    function stopAutoplay() {
+      clearInterval(autoplayInterval);
+    }
+
+    function handleGesture() {
+      const swipeThreshold = 50;
+      if (Math.abs(touchEndX - touchStartX) < swipeThreshold) {
+        return;
+      }
+      
+      if (touchEndX < touchStartX) {
+        currentSlide = (currentSlide + 1) % slides.length;
+      } else {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+      }
+      showSlide(currentSlide);
+      startAutoplay();
+    }
+
+    showSlide(currentSlide);
+    startAutoplay();
+
+    sliderWrapper.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+      stopAutoplay();
+    });
+
+    sliderWrapper.addEventListener('touchend', e => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleGesture();
+    });
+  });
+</script>
+
+{% schema %}{
+  "name": "MVD Slider",
+  "tag": "section",
+  "class": "mvd-slider-section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Velocidad de transición",
+      "default": 5,
+      "info": "Define la velocidad en segundos para el cambio automático de las imágenes."
+    },
+    {
+      "type": "select",
+      "id": "animation_type",
+      "label": "Tipo de animación",
+      "default": "zoom-out",
+      "options": [
+        {
+          "value": "zoom-out",
+          "label": "Zoom-out"
+        },
+        {
+          "value": "fade",
+          "label": "Atenuar"
+        },
+        {
+          "value": "slide-in-left",
+          "label": "Deslizar"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_width",
+      "label": "Ancho de la sección",
+      "default": "page-width",
+      "options": [
+        {
+          "value": "page-width",
+          "label": "Ancho de página (Limitado)"
+        },
+        {
+          "value": "full",
+          "label": "Full Width"
+        },
+        {
+          "value": "fixed",
+          "label": "Ancho fijo (960px)"
+        },
+        {
+          "value": "fixed-extended",
+          "label": "Ancho extendido (1200px)"
+        }
+      ],
+      "info": "Controla el ancho de la sección en la vista de escritorio."
+    },
+    {
+      "type": "select",
+      "id": "sizing_type",
+      "label": "Ajuste de imagen",
+      "default": "cover",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Llenar contenedor (Sin espacios)"
+        },
+        {
+          "value": "contain",
+          "label": "Ajustar imagen (Puede haber espacios)"
+        }
+      ],
+      "info": "Elige cómo se ajustará la imagen dentro del contenedor."
+    },
+    {
+      "type": "header",
+      "content": "Ajustes de Altura"
+    },
+    {
+      "type": "range",
+      "id": "height_desktop",
+      "min": 100,
+      "max": 1000,
+      "step": 10,
+      "unit": "px",
+      "label": "Altura Desktop",
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "height_mobile",
+      "min": 100,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "label": "Altura Móvil",
+      "default": 400
+    },
+    {
+      "type": "header",
+      "content": "Espaciado Desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Superior",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Inferior",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Espaciado Móvil"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mb",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Superior Móvil",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mb",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Inferior Móvil",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slider",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_desktop",
+          "label": "Imagen para Desktop"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Imagen para Móvil"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "URL de destino",
+          "info": "Enlace al que el slider dirigirá al hacer clic."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "MVD Slider",
+      "blocks": [
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        }
+      ]
+    }
+  ]
+}{% endschema %}

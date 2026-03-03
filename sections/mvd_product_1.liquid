@@ -1,0 +1,413 @@
+{% comment %}
+  mvd_product_1.liquid
+  Section for a featured product layout with a large side image and content area.
+{% endcomment %}
+
+{%- liquid
+  assign featured_image = section.settings.featured_image
+  assign featured_product = section.settings.featured_product
+  assign subtitle = section.settings.subtitle
+  assign title = section.settings.title
+  assign description = section.settings.description
+  assign link_text = section.settings.link_text
+  assign link_url = section.settings.link_url
+  
+  assign bg_color = section.settings.bg_color
+  assign text_color = section.settings.text_color
+  assign accent_color = section.settings.accent_color
+  
+  assign image_position = section.settings.image_position
+  assign image_ratio = section.settings.image_ratio
+  assign layout_width = section.settings.layout_width
+-%}
+
+<div id="mvd-product-1-{{ section.id }}" class="mvd-product-1-section" style="background-color: {{ bg_color }};">
+  <div class="mvd-product-1-container {{ layout_width }} position-{{ image_position }}">
+    
+    <div class="mvd-product-1-media">
+      {%- if featured_image != blank -%}
+        <div class="mvd-product-1-image-wrapper ratio-{{ image_ratio }}">
+          {{ featured_image | image_url: width: 1200 | image_tag: 
+            loading: 'lazy', 
+            class: 'mvd-product-1-main-img' 
+          }}
+        </div>
+      {%- else -%}
+        <div class="mvd-product-1-placeholder ratio-{{ image_ratio }}">
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="mvd-product-1-content">
+      <div class="mvd-product-1-content-inner">
+        {%- if subtitle != blank -%}
+          <span class="mvd-product-1-subtitle" style="color: {{ text_color }}; opacity: 0.7;">{{ subtitle | escape }}</span>
+        {%- endif -%}
+        
+        {%- if title != blank -%}
+          <h2 class="mvd-product-1-title" style="color: {{ text_color }};">{{ title | escape }}</h2>
+        {%- endif -%}
+
+        {%- if description != blank -%}
+          <div class="mvd-product-1-description typography--body" style="color: {{ text_color }}; opacity: 0.8;">
+            {{ description }}
+          </div>
+        {%- endif -%}
+
+        {%- if featured_product != blank -%}
+          <div class="mvd-product-1-featured-item">
+            <a href="{{ featured_product.url }}" class="mvd-product-1-p-link">
+              <div class="mvd-product-1-p-image">
+                {{ featured_product.featured_media | image_url: width: 600 | image_tag: 
+                  loading: 'lazy', 
+                  class: 'mvd-product-1-small-img' 
+                }}
+              </div>
+            </a>
+          </div>
+        {%- endif -%}
+
+        {%- if link_text != blank -%}
+          <div class="mvd-product-1-cta">
+            <a href="{{ link_url | default: featured_product.url | default: '#' }}" class="mvd-product-1-link" style="color: {{ text_color }}; border-bottom-color: {{ accent_color | default: text_color }};">
+              {{ link_text | escape }}
+            </a>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  .mvd-product-1-section {
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+
+  @media screen and (max-width: 767px) {
+    .mvd-product-1-section {
+      padding: {{ section.settings.padding_top_mb }}px 0 {{ section.settings.padding_bottom_mb }}px;
+    }
+  }
+
+  .mvd-product-1-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    max-width: 100%;
+  }
+
+  .mvd-product-1-container.full-width {
+    padding: 0;
+  }
+
+  .mvd-product-1-container.page-width {
+    max-width: var(--page-width, 1300px);
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .mvd-product-1-media, .mvd-product-1-content {
+    flex: 0 0 50%;
+    width: 50%;
+  }
+
+  @media screen and (max-width: 767px) {
+    .mvd-product-1-media, .mvd-product-1-content {
+      flex: 0 0 100%;
+      width: 100%;
+    }
+    .mvd-product-1-container.position-right {
+       flex-direction: column-reverse;
+    }
+  }
+
+  .position-right {
+    flex-direction: row-reverse;
+  }
+
+  .mvd-product-1-image-wrapper, .mvd-product-1-placeholder {
+    width: 100%;
+    line-height: 0;
+    overflow: hidden;
+  }
+
+  .mvd-product-1-image-wrapper.ratio-square, .mvd-product-1-placeholder.ratio-square {
+    aspect-ratio: 1 / 1;
+  }
+  .mvd-product-1-image-wrapper.ratio-portrait, .mvd-product-1-placeholder.ratio-portrait {
+    aspect-ratio: 2 / 3;
+  }
+  .mvd-product-1-image-wrapper.ratio-landscape, .mvd-product-1-placeholder.ratio-landscape {
+    aspect-ratio: 4 / 3;
+  }
+
+  .mvd-product-1-main-img, .mvd-product-1-placeholder svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .mvd-product-1-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    text-align: center;
+  }
+
+  .mvd-product-1-content-inner {
+    max-width: 500px;
+  }
+
+  .mvd-product-1-subtitle {
+    display: block;
+    margin-bottom: 15px;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .mvd-product-1-title {
+    margin: 0 0 25px;
+    font-size: 2.2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    line-height: 1.2;
+    letter-spacing: 0.05em;
+  }
+
+  .mvd-product-1-description {
+    margin-bottom: 35px;
+    line-height: 1.6;
+    font-size: 1rem;
+  }
+
+  .mvd-product-1-featured-item {
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto 35px;
+  }
+
+  .mvd-product-1-p-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background-color: #f8f8f8;
+  }
+
+  .mvd-product-1-small-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .mvd-product-1-p-link:hover .mvd-product-1-small-img {
+    transform: scale(1.05);
+  }
+
+  .mvd-product-1-cta {
+    margin-top: 20px;
+  }
+
+  .mvd-product-1-link {
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    padding-bottom: 4px;
+    border-bottom: 1px solid currentColor;
+    transition: opacity 0.3s ease;
+  }
+
+  .mvd-product-1-link:hover {
+    opacity: 0.7;
+  }
+
+  @media screen and (max-width: 1024px) {
+    .mvd-product-1-title {
+      font-size: 1.8rem;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .mvd-product-1-content {
+      padding: 40px 20px;
+    }
+    .mvd-product-1-title {
+      font-size: 1.5rem;
+    }
+    .mvd-product-1-featured-item {
+      max-width: 100%;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "MVD Product 1",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Imagen Destacada"
+    },
+    {
+      "type": "image_picker",
+      "id": "featured_image",
+      "label": "Imagen Principal"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Posición de imagen",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Izquierda" },
+        { "value": "right", "label": "Derecha" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Relación de aspecto de imagen",
+      "default": "natural",
+      "options": [
+        { "value": "natural", "label": "Original (Natural)" },
+        { "value": "square", "label": "Cuadrado (1:1)" },
+        { "value": "portrait", "label": "Retrato (2:3)" },
+        { "value": "landscape", "label": "Paisaje (4:3)" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Contenido"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Trends & Tradition"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "For Everyday Wear"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Descripción",
+      "default": "From dainty classics that are perfect for daily adornment to chic, trendsetting pieces designed to complement any occasion - our selection blends exquisite craftsmanship with modern sensibility."
+    },
+    {
+      "type": "product",
+      "id": "featured_product",
+      "label": "Producto Destacado"
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Texto del enlace",
+      "default": "Shop All Products"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "URL del enlace",
+      "info": "Si se deja vacío, enlazará al producto destacado."
+    },
+    {
+      "type": "header",
+      "content": "Diseño y Estilo"
+    },
+    {
+      "type": "select",
+      "id": "layout_width",
+      "label": "Ancho de sección",
+      "default": "full-width",
+      "options": [
+        { "value": "full-width", "label": "Ancho Total" },
+        { "value": "page-width", "label": "Ancho de Página" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Fondo de Sección",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color de Texto",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Color de Acento (Borde enlace)",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "header",
+      "content": "Espaciado Desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Superior",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Inferior",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Espaciado Móvil"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mb",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Superior Móvil",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mb",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Inferior Móvil",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "MVD Product 1"
+    }
+  ]
+}
+{% endschema %}

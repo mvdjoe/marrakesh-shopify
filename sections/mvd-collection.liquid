@@ -1,0 +1,471 @@
+<style>
+  #mvd-collection-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    padding-left: {{ section.settings.padding_left }}px;
+    padding-right: {{ section.settings.padding_right }}px;
+  }
+  
+  .mvd-banner-grid-section-full-width {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  
+  .mvd-grid-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+  }
+  
+  .mvd-grid-container-fluid {
+    width: 100%;
+    padding: 0;
+  }
+
+  .mvd-banner-grid-section .mvd-grid {
+    display: grid;
+    gap: {{ section.settings.gap_desktop }}px;
+    margin: 0;
+  }
+
+  /* Grid en Mobile (se aplican por defecto) */
+  .mvd-grid.mobile--1-col {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .mvd-grid.mobile--2-col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .mvd-grid.mobile--3-col {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  /* Grid en Desktop */
+  @media (min-width: 768px) {
+    .mvd-grid.desktop--1-col {
+      grid-template-columns: repeat(1, 1fr);
+    }
+    .mvd-grid.desktop--2-col {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .mvd-grid.desktop--3-col {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .mvd-grid.desktop--4-col {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .mvd-grid.desktop--5-col {
+      grid-template-columns: repeat(5, 1fr);
+    }
+    .mvd-grid.desktop--6-col {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+
+  @media (max-width: 767px) {
+    #mvd-collection-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mb }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mb }}px;
+      padding-left: {{ section.settings.padding_left_mb }}px;
+      padding-right: {{ section.settings.padding_right_mb }}px;
+    }
+    #mvd-collection-{{ section.id }} .mvd-grid {
+      gap: {{ section.settings.gap_mobile }}px;
+    }
+  }
+
+  .mvd-banner-item {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Mantiene la proporción 1:1 exacta */
+    height: auto;
+  }
+
+  .mvd-banner-item a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .mvd-banner-item img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: none !important;
+    transform: none !important;
+    animation: none !important;
+  }
+  /* Opciones de Slider Swiper */
+  .swiper-button-next, .swiper-button-prev {
+    color: #000;
+    --swiper-navigation-size: 20px;
+    background: rgba(255,255,255,0.8);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    z-index: 100 !important;
+    pointer-events: auto !important;
+  }
+
+  .swiper-button-disabled {
+    pointer-events: auto !important;
+    opacity: 0.2 !important;
+    cursor: default !important;
+  }
+
+  .swiper-button-next:after, .swiper-button-prev:after {
+    font-size: 14px;
+    font-weight: 800;
+  }
+
+  .swiper-button-next, .swiper-button-prev {
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+
+  @media (max-width: 767px) {
+    .swiper-button-next, .swiper-button-prev {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  .mvd-banner-grid-swiper:hover .swiper-button-next,
+  .mvd-banner-grid-swiper:hover .swiper-button-prev {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .mvd-banner-grid-swiper {
+    padding: 0 10px; /* Reducido para permitir que las flechas floten sobre los bordes */
+    position: relative;
+  }
+  
+  .mvd-banner-grid-swiper .swiper-button-prev { left: 10px; }
+  .mvd-banner-grid-swiper .swiper-button-next { right: 10px; }
+  
+  .mvd-banner-grid-swiper .swiper-slide {
+    height: auto !important; /* Evita que Swiper fuerce una altura excesiva */
+    display: flex;
+    flex-direction: column;
+  }
+</style>
+
+<div id="mvd-collection-{{ section.id }}" class="mvd-banner-grid-section mvd-banner-grid-section-{{ section.settings.layout }}">
+  <div class="{% if section.settings.layout == 'container' %}mvd-grid-container{% else %}mvd-grid-container-fluid{% endif %}">
+    {%- if section.settings.section_heading != blank -%}
+      <h2 class="section-title" style="text-align: center;">{{ section.settings.section_heading }}</h2>
+    {%- endif -%}
+
+    {% if section.blocks.size > 0 %}
+      {%- liquid
+        assign show_slider_desktop = section.settings.enable_slider_desktop
+        assign show_slider_mobile = section.settings.enable_slider_mobile
+      -%}
+
+      {% if show_slider_desktop or show_slider_mobile %}
+        <div class="swiper mvd-banner-grid-swiper {% if show_slider_desktop and show_slider_mobile == false %}desktop-only-slider{% elsif show_slider_mobile and show_slider_desktop == false %}mobile-only-slider{% endif %}">
+          <div class="swiper-wrapper">
+            {% for block in section.blocks %}
+              <div class="swiper-slide mvd-banner-item" {{ block.shopify_attributes }}>
+                <a href="{{ block.settings.link }}">
+                  {%- if block.settings.image != blank -%}
+                    {%- assign image_url = block.settings.image | img_url: '600x' -%}
+                    <img src="{{ image_url }}" alt="{{ block.settings.link | escape }}">
+                  {%- else -%}
+                    <div class="placeholder-image">
+                      {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                    </div>
+                  {%- endif -%}
+                </a>
+              </div>
+            {% endfor %}
+          </div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+        </div>
+      {% endif %}
+
+      <div class="mvd-grid {% if show_slider_desktop %}desktop-hide{% endif %} {% if show_slider_mobile %}mobile-hide{% endif %} mobile--{{ section.settings.mobile_columns }}-col desktop--{{ section.settings.desktop_columns }}-col">
+        {% for block in section.blocks %}
+          <div class="mvd-banner-item" {{ block.shopify_attributes }}>
+            <a href="{{ block.settings.link }}">
+              {%- if block.settings.image != blank -%}
+                {%- assign image_url = block.settings.image | img_url: '600x' -%}
+                <img src="{{ image_url }}" alt="{{ block.settings.link | escape }}">
+              {%- else -%}
+                <div class="placeholder-image">
+                  {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                </div>
+              {%- endif -%}
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="placeholder-section">
+        <h2>Sección MVD Banner Grid</h2>
+        <p>Añade bloques de banners para empezar a mostrar contenido.</p>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<style>
+  @media (min-width: 768px) {
+    .mvd-banner-grid-section .desktop-hide { display: none !important; }
+    .mvd-banner-grid-section .mobile-only-slider { display: none !important; }
+  }
+  @media (max-width: 767px) {
+    .mvd-banner-grid-section .mobile-hide { display: none !important; }
+    .mvd-banner-grid-section .desktop-only-slider { display: none !important; }
+  }
+</style>
+
+<script>
+  function initMvdCollectionSlider_{{ section.id | replace: '-', '_' }}() {
+    const sectionEl = document.querySelector('#mvd-collection-{{ section.id }}');
+    const swiperEl = sectionEl ? sectionEl.querySelector('.swiper') : null;
+    if (swiperEl && typeof Swiper !== 'undefined') {
+      const swiper = new Swiper(swiperEl, {
+        slidesPerView: 1,
+        spaceBetween: parseInt('{{ section.settings.gap_mobile }}'),
+        grabCursor: true,
+        simulateTouch: true,
+        preventClicks: true,
+        preventClicksPropagation: true,
+        navigation: {
+          nextEl: '#mvd-collection-{{ section.id }} .swiper-button-next',
+          prevEl: '#mvd-collection-{{ section.id }} .swiper-button-prev',
+        },
+        watchOverflow: true,
+        breakpoints: {
+          768: {
+            slidesPerView: parseInt('{{ section.settings.slider_columns_desktop }}'),
+            spaceBetween: parseInt('{{ section.settings.gap_desktop }}'),
+          }
+        }
+      });
+
+      // Asegurar que las flechas no propaguen clics al fondo
+      const arrows = sectionEl.querySelectorAll('.swiper-button-next, .swiper-button-prev');
+      arrows.forEach(arrow => {
+        arrow.addEventListener('click', (e) => {
+          e.stopPropagation();
+        });
+      });
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', initMvdCollectionSlider_{{ section.id | replace: '-', '_' }});
+  document.addEventListener('shopify:section:load', initMvdCollectionSlider_{{ section.id | replace: '-', '_' }});
+</script>
+
+{% schema %}{
+  "name": "MVD Banner Grid",
+  "tag": "section",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Título de la sección"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Ancho de la sección",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Ancho fijo (Container)"
+        },
+        {
+          "value": "full-width",
+          "label": "Ancho completo (Full width)"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "mobile_columns",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "label": "Columnas en móvil",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "desktop_columns",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "label": "Columnas en escritorio (Grid)",
+      "default": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_slider_desktop",
+      "label": "Activar Slider en escritorio",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_slider_mobile",
+      "label": "Activar Slider en móvil",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "slider_columns_desktop",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "label": "Columnas visibles en Slider",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Espaciado entre banners Desktop",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Espaciado entre banners Móvil",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Espaciado Desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Superior Desktop",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Inferior Desktop",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "min": 0,
+      "max": 500,
+      "step": 10,
+      "unit": "px",
+      "label": "Padding Izquierdo Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "min": 0,
+      "max": 500,
+      "step": 10,
+      "unit": "px",
+      "label": "Padding Derecho Desktop",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Espaciado Móvil"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mb",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Superior Móvil",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mb",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Inferior Móvil",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "padding_left_mb",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Izquierdo Móvil",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_right_mb",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Derecho Móvil",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "banner",
+      "name": "Banner",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen del banner"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Enlace del banner"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "MVD Banner Grid",
+      "category": "Banners"
+    }
+  ]
+}{% endschema %}

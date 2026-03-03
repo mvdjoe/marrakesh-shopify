@@ -1,0 +1,532 @@
+{% comment %}
+  mvd_banner.liquid
+  This section combines MVD Slider and MVD Video into a single unified banner.
+  Supports image slides and video slides with customizable animations.
+{% endcomment %}
+
+{%- liquid
+  assign animation_type = section.settings.animation_type
+  assign autoplay_speed = section.settings.autoplay_speed | times: 1000
+  assign section_width = section.settings.section_width
+  assign sizing_type = section.settings.sizing_type
+-%}
+
+<div class="mvd-banner-section {{ 'width--' | append: section_width }}">
+  {%- if section.blocks.size > 0 -%}
+    <div class="mvd-banner-wrapper {{ 'animation--' | append: animation_type }}" data-autoplay-speed="{{ autoplay_speed }}">
+      {% for block in section.blocks %}
+        <div class="mvd-banner-slide{% if forloop.first %} active{% endif %}" 
+             {{ block.shopify_attributes }} 
+             data-block-type="{{ block.type }}"
+             data-height-desktop="{{ block.settings.height_desktop | default: 600 }}"
+             data-height-mobile="{{ block.settings.height_mobile | default: 400 }}">
+          
+          {%- case block.type -%}
+            {%- when 'slide' -%}
+              {% comment %} IMAGE SLIDE {% endcomment %}
+              {%- liquid
+                assign desktop_image = block.settings.image_desktop
+                assign mobile_image = block.settings.image_mobile
+                assign link_url = block.settings.link_url
+              -%}
+
+              {% if link_url != blank %}
+                <a href="{{ link_url }}" class="mvd-banner-link">
+              {% endif %}
+
+              <div class="mvd-banner-media-container">
+                {% if desktop_image != blank %}
+                  <picture>
+                    {% if mobile_image != blank %}
+                      <source media="(max-width: 768px)" srcset="{{ mobile_image | image_url: width: 768 }}">
+                    {% endif %}
+                    <img src="{{ desktop_image | image_url: width: 1920 }}"
+                         alt="{{ desktop_image.alt | default: 'Banner Image' }}"
+                         class="mvd-banner-image {{ 'sizing--' | append: sizing_type }}">
+                  </picture>
+                {% else %}
+                  <div class="mvd-banner-placeholder">
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                  </div>
+                {% endif %}
+              </div>
+
+              {% if link_url != blank %}
+                </a>
+              {% endif %}
+
+            {%- when 'video' -%}
+              {% comment %} VIDEO SLIDE {% endcomment %}
+              {%- liquid
+                assign video_desktop = block.settings.video_desktop
+                assign video_mobile = block.settings.video_mobile
+                assign link_url = block.settings.link_url
+                assign overlay_opacity = block.settings.overlay_opacity | times: 0.01
+              -%}
+
+              <div class="mvd-banner-media-container">
+                <div class="mvd-video-banner__desktop">
+                  {%- if video_desktop != blank -%}
+                    {{ video_desktop | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, class: 'mvd-banner-video ' | append: sizing_type }}
+                  {%- else -%}
+                    <div class="mvd-banner-placeholder">Video Desktop Placeholder</div>
+                  {%- endif -%}
+                </div>
+
+                <div class="mvd-video-banner__mobile">
+                  {%- if video_mobile != blank -%}
+                    {{ video_mobile | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, class: 'mvd-banner-video ' | append: sizing_type }}
+                  {%- elsif video_desktop != blank -%}
+                     {{ video_desktop | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, class: 'mvd-banner-video ' | append: sizing_type }}
+                  {%- else -%}
+                    <div class="mvd-banner-placeholder">Video Mobile Placeholder</div>
+                  {%- endif -%}
+                </div>
+
+                <div class="mvd-banner-overlay" style="opacity: {{ overlay_opacity }};"></div>
+                
+                {%- if link_url != blank -%}
+                  <a href="{{ link_url }}" class="mvd-banner-link-overlay"></a>
+                {%- endif -%}
+              </div>
+
+          {%- endcase -%}
+        </div>
+      {% endfor %}
+    </div>
+  {%- else -%}
+    <div class="mvd-banner-no-blocks">
+      <div class="placeholder-content">
+        Agrega un bloque de imagen o video para comenzar.
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+<style>
+  .mvd-banner-section {
+    padding: 0;
+    margin: 0;
+    position: relative;
+  }
+
+  /* Layout Widths */
+  .width--page-width {
+    max-width: var(--page-width);
+    margin: 0 auto;
+  }
+  .width--full .mvd-banner-wrapper {
+    width: 100%;
+  }
+  .width--fixed {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .width--fixed-extended {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .mvd-banner-wrapper {
+    position: relative;
+    overflow: hidden;
+    touch-action: pan-y;
+    transition: min-height 0.3s ease-in-out, height 0.3s ease-in-out;
+  }
+
+  .mvd-video-banner__desktop, .mvd-video-banner__mobile {
+    height: 100%;
+    width: 100%;
+  }
+
+  .mvd-banner-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s ease-in-out;
+  }
+
+  .mvd-banner-slide.active {
+    opacity: 1;
+    visibility: visible;
+    position: absolute;
+  }
+
+  .mvd-banner-link, .mvd-banner-link-overlay {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+  }
+
+  .mvd-banner-media-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .mvd-banner-image, .mvd-banner-video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+    display: block;
+    max-width: none !important;
+    max-height: none !important;
+  }
+
+  /* Sizing modes */
+  .mvd-banner-image.sizing--contain, .mvd-banner-video.contain {
+    object-fit: contain;
+  }
+  .mvd-banner-image.sizing--cover, .mvd-banner-video.cover {
+    object-fit: cover;
+  }
+
+  /* Video specific */
+  .mvd-video-banner__mobile {
+    display: none;
+  }
+  
+  .mvd-banner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  @media screen and (max-width: 767px) {
+    .mvd-video-banner__desktop {
+      display: none;
+    }
+    .mvd-video-banner__mobile {
+      display: block;
+    }
+  }
+
+  /* Animations */
+  .animation--zoom-out .mvd-banner-slide.active .mvd-banner-image,
+  .animation--zoom-out .mvd-banner-slide.active .mvd-banner-video {
+    animation: zoom-out-animation 1.8s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+  }
+  
+  @keyframes zoom-out-animation {
+    from { transform: scale(1.1); }
+    to { transform: scale(1); }
+  }
+
+  .animation--fade .mvd-banner-slide {
+    transition: opacity 1.5s ease-in-out;
+  }
+
+  .animation--slide-in-left .mvd-banner-slide {
+    transform: translateX(100%);
+    transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+  }
+  .animation--slide-in-left .mvd-banner-slide.active {
+    transform: translateX(0);
+  }
+
+  .mvd-banner-no-blocks {
+    padding: 100px 0;
+    text-align: center;
+    background-color: #f8f8f8;
+  }
+
+  .mvd-banner-placeholder {
+    width: 100%;
+    height: 500px;
+    background-color: #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #666;
+  }
+</style>
+
+<script>
+  (function() {
+    const initBanner = () => {
+      const bannerWrappers = document.querySelectorAll('.mvd-banner-wrapper');
+      bannerWrappers.forEach(wrapper => {
+        const slides = wrapper.querySelectorAll('.mvd-banner-slide');
+        if (slides.length === 0) return;
+        
+        let currentSlide = 0;
+        let autoplayInterval;
+        const autoplaySpeed = parseInt(wrapper.dataset.autoplaySpeed, 10) || 5000;
+
+        const updateHeight = (activeSlide) => {
+          const isMobile = window.innerWidth <= 767;
+          const hDesktop = activeSlide.dataset.heightDesktop;
+          const hMobile = activeSlide.dataset.heightMobile;
+          const finalHeight = (isMobile ? hMobile : hDesktop) + 'px';
+          wrapper.style.minHeight = finalHeight;
+          wrapper.style.height = finalHeight;
+        };
+
+        const showSlide = (index) => {
+          slides.forEach(slide => slide.classList.remove('active'));
+          const activeSlide = slides[index];
+          activeSlide.classList.add('active');
+          
+          updateHeight(activeSlide);
+
+          // Reset videos if needed
+          const video = activeSlide.querySelector('video');
+          if (video) {
+            video.currentTime = 0;
+            video.play().catch(() => {});
+          }
+        };
+
+        if (slides.length === 1) {
+          showSlide(0);
+          window.addEventListener('resize', () => updateHeight(slides[0]));
+          return;
+        }
+
+        const startAutoplay = () => {
+          stopAutoplay();
+          autoplayInterval = setInterval(() => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+          }, autoplaySpeed);
+        };
+
+        const stopAutoplay = () => clearInterval(autoplayInterval);
+
+        const handleGesture = () => {
+          const swipeThreshold = 50;
+          if (Math.abs(touchEndX - touchStartX) < swipeThreshold) return;
+          
+          if (touchEndX < touchStartX) {
+            currentSlide = (currentSlide + 1) % slides.length;
+          } else {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+          }
+          showSlide(currentSlide);
+          startAutoplay();
+        };
+
+        showSlide(currentSlide);
+        if (slides.length > 1) {
+          startAutoplay();
+        }
+
+        window.addEventListener('resize', () => {
+          const activeSlide = wrapper.querySelector('.mvd-banner-slide.active');
+          if (activeSlide) updateHeight(activeSlide);
+        });
+
+        wrapper.addEventListener('touchstart', e => {
+          touchStartX = e.changedTouches[0].screenX;
+          if (slides.length > 1) stopAutoplay();
+        });
+
+        wrapper.addEventListener('touchend', e => {
+          touchEndX = e.changedTouches[0].screenX;
+          handleGesture();
+        });
+      });
+    };
+
+    document.addEventListener('DOMContentLoaded', initBanner);
+    if (window.Shopify && window.Shopify.designMode) {
+      document.addEventListener('shopify:section:load', initBanner);
+      document.addEventListener('shopify:section:select', initBanner);
+      document.addEventListener('shopify:section:reorder', initBanner);
+      document.addEventListener('shopify:block:select', (event) => {
+        const blockId = event.detail.blockId;
+        const blockElement = document.querySelector(`[data-shopify-editor-block*="${blockId}"]`);
+        if (blockElement && blockElement.classList.contains('mvd-banner-slide')) {
+           const wrapper = blockElement.closest('.mvd-banner-wrapper');
+           if (wrapper) {
+             const slides = Array.from(wrapper.querySelectorAll('.mvd-banner-slide'));
+             slides.forEach(s => s.classList.remove('active'));
+             blockElement.classList.add('active');
+             const isMobile = window.innerWidth <= 767;
+             const hDesktop = blockElement.dataset.heightDesktop;
+             const hMobile = blockElement.dataset.heightMobile;
+             const finalHeight = (isMobile ? hMobile : hDesktop) + 'px';
+             wrapper.style.minHeight = finalHeight;
+             wrapper.style.height = finalHeight;
+             
+             // Reset videos if needed
+             const video = blockElement.querySelector('video');
+             if (video) {
+               video.currentTime = 0;
+               video.play().catch(() => {});
+             }
+           }
+        }
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "MVD Banner",
+  "tag": "section",
+  "class": "mvd-banner-section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 3,
+      "max": 15,
+      "step": 1,
+      "unit": "s",
+      "label": "Velocidad de cambio",
+      "default": 5
+    },
+    {
+      "type": "select",
+      "id": "animation_type",
+      "label": "Animación",
+      "default": "zoom-out",
+      "options": [
+        { "value": "zoom-out", "label": "Zoom-out" },
+        { "value": "fade", "label": "Atenuar" },
+        { "value": "slide-in-left", "label": "Deslizar" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Ancho",
+      "default": "full",
+      "options": [
+        { "value": "page-width", "label": "Ancho de página" },
+        { "value": "full", "label": "Pantalla completa" },
+        { "value": "fixed", "label": "Fijo (960px)" },
+        { "value": "fixed-extended", "label": "Extendido (1200px)" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "sizing_type",
+      "label": "Ajuste de imagen",
+      "default": "cover",
+      "options": [
+        { "value": "cover", "label": "Cubrir" },
+        { "value": "contain", "label": "Contener" }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Imagen",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_desktop",
+          "label": "Imagen Desktop"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Imagen Móvil"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Enlace"
+        },
+        {
+          "type": "range",
+          "id": "height_desktop",
+          "min": 100,
+          "max": 1080,
+          "step": 10,
+          "unit": "px",
+          "label": "Altura Desktop",
+          "default": 600
+        },
+        {
+          "type": "range",
+          "id": "height_mobile",
+          "min": 100,
+          "max": 1080,
+          "step": 10,
+          "unit": "px",
+          "label": "Altura Móvil",
+          "default": 400
+        }
+      ]
+    },
+    {
+      "type": "video",
+      "name": "Video",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video_desktop",
+          "label": "Video Desktop"
+        },
+        {
+          "type": "video",
+          "id": "video_mobile",
+          "label": "Video Móvil"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Enlace"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "%",
+          "label": "Opacidad del Overlay",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "height_desktop",
+          "min": 100,
+          "max": 1080,
+          "step": 10,
+          "unit": "px",
+          "label": "Altura Desktop",
+          "default": 600
+        },
+        {
+          "type": "range",
+          "id": "height_mobile",
+          "min": 100,
+          "max": 1080,
+          "step": 10,
+          "unit": "px",
+          "label": "Altura Móvil",
+          "default": 400
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "MVD Banner",
+      "blocks": [
+        { "type": "slide" }
+      ]
+    }
+  ]
+}
+{% endschema %}
