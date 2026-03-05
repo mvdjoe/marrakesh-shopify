@@ -15,8 +15,8 @@
         "video_hAdjKa": {
           "type": "video",
           "settings": {
-            "video_desktop": "shopify://files/videos/vd-1.mp4",
-            "video_mobile": "shopify://files/videos/m-vd-1.mp4",
+            "video_desktop": "",
+            "video_mobile": "",
             "link_url": "",
             "overlay_opacity": 0,
             "height_desktop": 750,
