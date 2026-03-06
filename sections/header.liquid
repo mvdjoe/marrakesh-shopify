@@ -97,6 +97,12 @@
     },
     {
       "type": "image_picker",
+      "id": "logo_hover",
+      "label": "Logo Hover Transparent",
+      "info": "Logo que se mostrará al hacer hover cuando el header sea transparente."
+    },
+    {
+      "type": "image_picker",
       "id": "logo_general",
       "label": "Logo General",
       "info": "Logo para todas las demás páginas del sitio."
@@ -142,6 +148,26 @@
     {
       "type": "header",
       "content": "Desktop"
+    },
+    {
+      "type": "range",
+      "id": "height_header_desktop",
+      "label": "Height Header Desktop",
+      "min": 40,
+      "max": 150,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "height_header_mobile",
+      "label": "Height Header Mobile",
+      "min": 40,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 60
     },
     {
       "type": "select",
@@ -260,6 +286,48 @@
       "id": "textcolor-top",
       "label": "Text Topbar",
       "default": "#fff"
+    },
+    {
+      "type": "header",
+      "content": "Colores Header - Home",
+      "info": "Configura los colores del header exclusivamente para la página de inicio."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_auto_hover_home",
+      "label": "Auto-detect Hover Color (Home)",
+      "default": false,
+      "info": "Detecta automáticamente un color de contraste basado en la imagen de fondo de la primera sección."
+    },
+    {
+      "type": "color",
+      "id": "textcolor_home",
+      "label": "Text Home",
+      "default": "#fff"
+    },
+    {
+      "type": "color",
+      "id": "linkcolor_home",
+      "label": "Link color Home",
+      "default": "#fff"
+    },
+    {
+      "type": "color",
+      "id": "linkhover_home",
+      "label": "Link hover Home",
+      "default": "#AD2C34"
+    },
+    {
+      "type": "color",
+      "id": "menutext_home",
+      "label": "Menu Text Home",
+      "default": "#fff"
+    },
+    {
+      "type": "color",
+      "id": "menutexthover_home",
+      "label": "Menu Text hover Home",
+      "default": "#AD2C34"
     },
     {
       "type": "header",

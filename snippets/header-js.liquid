@@ -78,13 +78,60 @@
     couponTitle: {{ settings.coupon_title | json }},
     couponAlert: {{ settings.coupon_copied | json }},
     cartCollection:{{ routes.all_products_collection_url | json }},
-    {% if settings.shipping_calculator and template != 'password' %}
-      shippingCalcSubmitButton: {{ settings.shipping_calculator_submit_button_label | default: 'Calculate shipping' | json }},
-      shippingCalcSubmitButtonDisabled: {{ settings.shipping_calculator_submit_button_label_disabled | default: 'Calculating...' | json }},
-      {% if customer %}shippingCalcCustomerIsLoggedIn: true,{% endif %}
-      shippingCalcMoneyFormat: {{ shop.money_with_currency_format | json }}
-    {% endif %}
+    autoHoverHome: {{ section.settings.enable_auto_hover_home | default: false | json }}
   };
+
+  {% if section.settings.enable_auto_hover_home %}
+    document.addEventListener('DOMContentLoaded', function() {
+      if (document.body.classList.contains('template-index')) {
+        const analyzeHeaderBg = () => {
+          const firstSection = document.querySelector('.shopify-section:not(#shopify-section-header)');
+          if (!firstSection) return;
+          
+          const img = firstSection.querySelector('img');
+          if (!img) return;
+
+          const getContrastColor = (image) => {
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.width = 10; // Miniature sample
+            canvas.height = 10;
+            try {
+              context.drawImage(image, 0, 0, 10, 10);
+              const data = context.getImageData(0, 0, 10, 10).data;
+              let r = 0, g = 0, b = 0;
+              for (let i = 0; i < data.length; i += 4) {
+                r += data[i];
+                g += data[i + 1];
+                b += data[i + 2];
+              }
+              r /= (data.length / 4);
+              g /= (data.length / 4);
+              b /= (data.length / 4);
+              // Calculate YIQ brightness
+              const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+              return (yiq >= 128) ? '#000000' : '#FFFFFF';
+            } catch (e) {
+              return null; // Cross-origin issue
+            }
+          };
+
+          if (img.complete) {
+            const color = getContrastColor(img);
+            if (color) document.documentElement.style.setProperty('--header-menuhover-auto', color);
+          } else {
+            img.onload = () => {
+              const color = getContrastColor(img);
+              if (color) document.documentElement.style.setProperty('--header-menuhover-auto', color);
+            };
+          }
+        };
+        analyzeHeaderBg();
+        // Re-analyze if slider changes
+        document.addEventListener('mvdSliderChange', analyzeHeaderBg); 
+      }
+    });
+  {% endif %}
 </script>
 
 <script src="{{ 'lazysizes.min.js' | asset_url }}" async="async"></script>

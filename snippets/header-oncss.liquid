@@ -1,12 +1,20 @@
 <style>
     :root{
       --header-background: {{ section.settings.background }};
-      --header-text: {{ section.settings.textcolor }};
-      --header-linkcolor: {{ section.settings.linkcolor }};
-      --header-linkhover: {{ section.settings.linkhover }};
-      --header-border-color:{{ header_border_color.red }}, {{ header_border_color.green }}, {{ header_border_color.blue }};
-      --header-menucolor: {{ section.settings.menutext }};
-      --header-menuhover: {{ section.settings.menutexthover }};
+      {%- if template == 'index' -%}
+        --header-text: {{ section.settings.textcolor_home }};
+        --header-linkcolor: {{ section.settings.linkcolor_home }};
+        --header-linkhover: {{ section.settings.linkhover_home }};
+        --header-menucolor: {{ section.settings.menutext_home }};
+        --header-menuhover: {{ section.settings.menutexthover_home }};
+        --header-menuhover-auto: {{ section.settings.menutexthover_home }};
+      {%- else -%}
+        --header-text: {{ section.settings.textcolor }};
+        --header-linkcolor: {{ section.settings.linkcolor }};
+        --header-linkhover: {{ section.settings.linkhover }};
+        --header-menucolor: {{ section.settings.menutext }};
+        --header-menuhover: {{ section.settings.menutexthover }};
+      {%- endif -%}
       --header-menudroptexttitle: {{ section.settings.menudroptexttitle }};
       --header-menudroptext: {{ section.settings.menudroptext }};
       --header-menudropbg: {{ section.settings.menudropbg }};
@@ -26,6 +34,8 @@
       --g-label-hot: {{ section.settings.menu_label_hot }};
       --g-label-sale: {{ section.settings.menu_label_sale }};
       --g-label-other: {{ section.settings.menu_label_other }};
+      --header-height-desktop: {{ section.settings.height_header_desktop }}px;
+      --header-height-mobile: {{ section.settings.height_header_mobile }}px;
     }
     #shopify-section-header{
     {%- if type_sticky == 'sticky' or type_sticky == 'sticky-top' -%}
@@ -589,12 +599,16 @@
     font-weight: var(--menu_font_weight);
     position: relative;
     color: var(--header-menucolor);
-    padding: 38px var(--padding-menu);
+    padding: calc( (var(--header-height-desktop) / 2) - 2px ) var(--padding-menu);
     display: block;
     white-space: nowrap;
     text-transform: var(--menu_type_text);
     letter-spacing:var(--menu_spacing);
-    transition: padding 0.3s ease;
+    transition: padding 0.3s ease, color 0.3s ease;
+  }
+  
+  .site-header__logo .logo-hover{
+    display:none;
   }
  
   .site-nav__link .site-nav__title{
@@ -604,7 +618,7 @@
     content: "";
     position: absolute;
     right: var(--padding-menu);
-    bottom: 34px;
+    bottom: calc( (var(--header-height-desktop) / 2) - 2px );
     width: 0;
     border-bottom: 1px solid var(--header-menuhover);
     -webkit-transition: width .3s ease;
@@ -621,7 +635,7 @@
     padding: 16px var(--padding-menu);
   }
   .size-header-small .site-nav__link .site-nav__title::before{
-    bottom: 24px;
+    bottom: calc( (var(--header-height-desktop) / 2) - 12px );
   }
   .thick-lineactive.size-header-small .site-nav__link .site-nav__title::before{
     bottom:0;
@@ -1247,7 +1261,30 @@
     .template-index .site-header--transparent:hover{
       background-color: var(--header-background);
     }
+    .template-index .site-header--transparent:hover .site-header__logo .logo-home{
+      display:none;
+    }
+    .template-index .site-header--transparent:hover .site-header__logo .logo-hover{
+      display:inline-block;
+    }
     {%- endif -%}
+    
+    {%- if section.settings.enable_auto_hover_home -%}
+    .template-index .site-header__link:hover, .template-index .site-nav__link:hover {
+       color: var(--header-menuhover-auto) !important;
+       mix-blend-mode: normal !important;
+    }
+    {%- else -%}
+    .site-header__link:hover, .site-nav__link:hover {
+       mix-blend-mode: difference;
+    }
+    {%- endif -%}
+    
+     @media (max-width:991px) {
+       .site-nav__link {
+          padding: calc( (var(--header-height-mobile) / 2) - 10px ) var(--padding-menu);
+       }
+     }
   }
   
   @media (max-width:991px) {

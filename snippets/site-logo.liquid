@@ -23,6 +23,14 @@
           width: logo_max_width,
           alt: shop.name
         }}
+        {%- if section.settings.logo_hover != blank -%}
+          {{ section.settings.logo_hover | image_url: width: maxlogo | image_tag:
+            class: 'logo-hover',
+            widths: '50, 100, 150, 200, 250, 300, 400, 500',
+            width: logo_max_width,
+            alt: shop.name
+          }}
+        {%- endif -%}
       {%- else -%}
         <span>{{ shop.name }}</span>
       {%- endif -%}
