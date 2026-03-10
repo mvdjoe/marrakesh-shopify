@@ -8,12 +8,18 @@
         --header-menucolor: {{ section.settings.menutext_home }};
         --header-menuhover: {{ section.settings.menutexthover_home }};
         --header-menuhover-auto: {{ section.settings.menutexthover_home }};
+        --header-menudrophover: {{ section.settings.menudroptexthover_home }};
+        --header-menucolor-header-hover: {{ section.settings.menutext_header_hover_home }};
+        --header-icon-header-hover: {{ section.settings.icon_color_header_hover_home }};
+        --header-icon-hover: {{ section.settings.icon_hover_color_home }};
       {%- else -%}
         --header-text: {{ section.settings.textcolor }};
         --header-linkcolor: {{ section.settings.linkcolor }};
         --header-linkhover: {{ section.settings.linkhover }};
         --header-menucolor: {{ section.settings.menutext }};
         --header-menuhover: {{ section.settings.menutexthover }};
+        --header-menudrophover: {{ section.settings.menudroptexthover }};
+        --header-icon-hover: {{ section.settings.icon_hover_color }};
       {%- endif -%}
       --header-menudroptexttitle: {{ section.settings.menudroptexttitle }};
       --header-menudroptext: {{ section.settings.menudroptext }};
@@ -133,7 +139,7 @@
   }
   
   .site-header__link:focus,.site-header__link:hover {
-    color: var(--header-linkhover);
+    color: var(--header-icon-hover);
   }
   
   .site-header__menu-toggle--close {
@@ -185,8 +191,8 @@
     transition: all ease .3s;
   }
   .site-header__link:hover .text-indicator, .site-header__link:focus .text-indicator{
-    border-color:var(--header-linkhover);
-    color:var(--header-linkhover);
+    border-color:var(--header-icon-hover);
+    color:var(--header-icon-hover);
   }
   
   .site-header__cart-indicator {
@@ -554,7 +560,7 @@
   }
   
   .site-nav__item .meganav li a:hover {
-    color: var(--g-main-2);
+    color: var(--header-menudrophover);
   }
   
   .site-nav__item .meganav__list {
@@ -577,6 +583,9 @@
   }
   .site-nav__item-mega .menu-title a{
     color: var(--header-menudroptexttitle);
+  }
+  .site-nav__item-mega .menu-title a:hover {
+    color: var(--header-menudrophover);
   }
   
   .site-nav__item-mega .box-image {
@@ -772,7 +781,7 @@
   }
   
   .meganav__link:focus,.meganav__link:hover {
-    color: var(--g-main);
+    color: var(--header-menudrophover);
   }
   
   .meganav__link--has-list {
@@ -1261,6 +1270,17 @@
     .template-index .site-header--transparent:hover{
       background-color: var(--header-background);
     }
+    .template-index .site-header--transparent:hover .site-nav__link, 
+    .site-header--transparent:hover .site-header__logo a{
+      color: var(--header-menucolor-header-hover) !important;
+    }
+    .template-index .site-header--transparent:hover .site-header__link {
+      color: var(--header-icon-header-hover) !important;
+    }
+    .template-index .site-header--transparent:hover .site-header__link .text-indicator {
+      color: var(--header-icon-header-hover) !important;
+      border-color: var(--header-icon-header-hover) !important;
+    }
     .template-index .site-header--transparent:hover .site-header__logo .logo-home{
       display:none;
     }
@@ -1317,6 +1337,40 @@
       padding:0
   }
   
+  {%- if section.settings.hover_transparent -%}
+  /* Sticky Header Hover Colors logic for Homepage */
+  .template-index .site-header--sticky.active {
+    background: var(--header-background);
+  }
+  .template-index .site-header--sticky.active .site-nav__link, 
+  .template-index .site-header--sticky.active .site-header__logo a {
+    color: var(--header-menucolor-header-hover) !important;
+  }
+  .template-index .site-header--sticky.active .site-header__link,
+  .template-index .site-header--sticky.active .site-header__link .icon,
+  .template-index .site-header--sticky.active .site-header__link svg,
+  .template-index .site-header--sticky.active .site-header__cart-indicator {
+    color: var(--header-icon-header-hover) !important;
+    fill: var(--header-icon-header-hover) !important;
+  }
+  @media (min-width: 992px) {
+    .template-index .site-header--sticky.active .site-header__link {
+      display: inline-flex !important;
+    }
+  }
+  .template-index .site-header--sticky.active .site-header__link .text-indicator {
+    color: var(--header-icon-header-hover) !important;
+    border-color: var(--header-icon-header-hover) !important;
+  }
+  .template-index .site-header--sticky.active .site-header__logo .logo-home {
+    display: none !important;
+  }
+  .template-index .site-header--sticky.active .site-header__logo .logo-hover {
+    display: inline-block !important;
+  }
+  {%- endif -%}
+
+  /* Global Sticky Header Active */
   .site-header--sticky.active {
     box-shadow: 0 0 1px rgb(0 0 0 / 30%);
     background: var(--header-background);
@@ -1353,6 +1407,43 @@
   }
   #topbar .social-icons li a{
     color:var(--header-text-top);
+  }
+
+  /* Search Visibility Fixes */
+  .modal__toggle-open.site-header__link,
+  .site-header__search-wrap {
+    display: inline-flex !important;
+  }
+  
+  @media (max-width: 991px) {
+    /* Mobile Transparent Header Implementation */
+    .site-header--transparent-mobile:not(.active) {
+      background-color: transparent !important;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      z-index: 99;
+      border: none;
+    }
+    .site-header--transparent-mobile:not(.active) .site-header__link,
+    .site-header--transparent-mobile:not(.active) .modal__toggle-search-mobile,
+    .site-header--transparent-mobile:not(.active) .site-header__logo a,
+    .site-header--transparent-mobile:not(.active) .toggle-menu-mobile .icon {
+      color: var(--header-linkcolor) !important;
+      fill: var(--header-linkcolor) !important;
+    }
+    /* Logo logic for mobile transparent */
+    .site-header--transparent-mobile:not(.active) .logo-home {
+      display: inline-block !important;
+    }
+    .site-header--transparent-mobile:not(.active) .logo-general {
+      display: none !important;
+    }
+    
+    /* Ensure search mobile toggle is visible */
+    .modal__toggle-search-mobile {
+      display: flex !important;
+    }
   }
   #topbar .social-icons li a:hover{
     color:var(--header-linkhover);

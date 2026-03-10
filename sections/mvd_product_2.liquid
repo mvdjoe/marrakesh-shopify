@@ -18,17 +18,49 @@
   
   assign image_position = section.settings.image_position
   assign image_ratio = section.settings.image_ratio
+  assign media_width = section.settings.media_width
+  assign content_width = 100 | minus: media_width
+  assign media_alignment = section.settings.media_alignment
+  assign content_alignment = section.settings.content_alignment
   assign layout_width = section.settings.layout_width
+
+  assign text_alignment = 'center'
+  if content_alignment == 'flex-start'
+    assign text_alignment = 'left'
+  elsif content_alignment == 'flex-end'
+    assign text_alignment = 'right'
+  endif
 -%}
 
-<div id="mvd-product-2-{{ section.id }}" class="mvd-product-2-section" style="background-color: {{ bg_color }};">
+<div id="mvd-product-2-{{ section.id }}" class="mvd-product-2-section" style="background-color: {{ bg_color }}; --mvd-media-width: {{ media_width }}%; --mvd-content-width: {{ content_width }}%; --mvd-media-align: {{ media_alignment }}; --mvd-content-align: {{ content_alignment }}; --mvd-text-align: {{ text_alignment }};">
   <div class="mvd-product-2-container {{ layout_width }} position-{{ image_position }}">
-    
+    {%- if subtitle != blank or title != blank or description != blank -%}
+      <div class="mvd-product-2-header">
+        <div class="mvd-product-2-header-inner">
+          {%- if subtitle != blank -%}
+            <span class="mvd-product-2-subtitle" style="color: {{ text_color }}; opacity: 0.7;">{{ subtitle | escape }}</span>
+          {%- endif -%}
+          
+          {%- if title != blank -%}
+            <h2 class="mvd-product-2-title" style="color: {{ text_color }};">{{ title | escape }}</h2>
+          {%- endif -%}
+
+          {%- if description != blank -%}
+            <div class="mvd-product-2-description typography--body" style="color: {{ text_color }}; opacity: 0.8;">
+              {{ description }}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+
     <div class="mvd-product-2-media">
       <div class="mvd-product-2-media-inner">
-        {%- if featured_image != blank -%}
-          <div class="mvd-product-2-image-wrapper ratio-{{ image_ratio }}">
-            {{ featured_image | image_url: width: 1200 | image_tag: 
+        {%- assign featured_image_block = section.blocks | where: 'type', 'featured_image' | first -%}
+        
+        {%- if featured_image_block and featured_image_block.settings.image != blank -%}
+          <div class="mvd-product-2-image-wrapper ratio-{{ image_ratio }}" {{ featured_image_block.shopify_attributes }}>
+            {{ featured_image_block.settings.image | image_url: width: 1200 | image_tag: 
               loading: 'lazy', 
               class: 'mvd-product-2-main-img' 
             }}
@@ -44,11 +76,12 @@
           {% if block.type == 'hotspot' and block.settings.product != blank %}
             {% assign prod = block.settings.product %}
             <div class="mvd-hotspot" 
+                 data-product-handle="{{ prod.handle }}"
                  style="top: {{ block.settings.pos_y }}%; left: {{ block.settings.pos_x }}%;" 
                  {{ block.shopify_attributes }}>
               <div class="mvd-hotspot-dot" style="background-color: {{ block.settings.color | default: '#ffffff' }}; shadow: 0 0 10px {{ block.settings.color | default: '#ffffff' }};"></div>
               <div class="mvd-hotspot-tooltip">
-                <a href="{{ prod.url }}" class="mvd-hotspot-card">
+                <a href="{{ prod.url }}" class="mvd-hotspot-card" aria-label="View {{ prod.title }}">
                   <div class="mvd-hotspot-img">
                     {{ prod.featured_media | image_url: width: 150 | image_tag }}
                   </div>
@@ -66,31 +99,18 @@
 
     <div class="mvd-product-2-content">
       <div class="mvd-product-2-content-inner">
-        {%- if subtitle != blank -%}
-          <span class="mvd-product-2-subtitle" style="color: {{ text_color }}; opacity: 0.7;">{{ subtitle | escape }}</span>
-        {%- endif -%}
-        
-        {%- if title != blank -%}
-          <h2 class="mvd-product-2-title" style="color: {{ text_color }};">{{ title | escape }}</h2>
-        {%- endif -%}
 
-        {%- if description != blank -%}
-          <div class="mvd-product-2-description typography--body" style="color: {{ text_color }}; opacity: 0.8;">
-            {{ description }}
-          </div>
-        {%- endif -%}
-
-        {%- assign product_slides = section.blocks | where: 'type', 'product_slide' -%}
+        {%- assign product_slides = section.blocks | where: 'type', 'hotspot' -%}
         {%- if product_slides.size > 0 -%}
           <div class="mvd-product-slider" data-slide-count="{{ product_slides.size }}">
             <div class="mvd-product-slider-inner">
               {%- for block in product_slides -%}
                 {%- assign prod = block.settings.product -%}
                 {%- if prod != blank -%}
-                  <div class="mvd-product-slide{% if forloop.first %} active{% endif %}" {{ block.shopify_attributes }}>
+                  <div class="mvd-product-slide{% if forloop.first %} active{% endif %}" data-product-handle="{{ prod.handle }}" {{ block.shopify_attributes }}>
                     <div class="mvd-product-2-featured-item">
                       <a href="{{ prod.url }}" class="mvd-product-2-p-link">
-                        <div class="mvd-product-2-p-image">
+                        <div class="mvd-product-2-p-image ratio-{{ section.settings.product_image_ratio }}">
                           {{ prod.featured_media | image_url: width: 600 | image_tag: 
                             loading: 'lazy', 
                             class: 'mvd-product-2-small-img primary' 
@@ -118,13 +138,10 @@
               {%- endfor -%}
             </div>
             {%- if product_slides.size > 1 -%}
-              <div class="mvd-product-slider-nav">
-                <button class="mvd-slider-prev" aria-label="Previous product">
-                  <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                </button>
-                <button class="mvd-slider-next" aria-label="Next product">
-                  <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                </button>
+              <div class="mvd-product-slider-dots">
+                {%- for block in product_slides -%}
+                  <button class="mvd-slider-dot{% if forloop.first %} active{% endif %}" aria-label="Go to slide {{ forloop.index }}"></button>
+                {%- endfor -%}
               </div>
             {%- endif -%}
           </div>
@@ -137,12 +154,12 @@
 
 <style>
   .mvd-product-2-section {
-    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    padding: {{ section.settings.padding_top }}px {{ section.settings.padding_right }}px {{ section.settings.padding_bottom }}px {{ section.settings.padding_left }}px;
   }
 
   @media screen and (max-width: 767px) {
     .mvd-product-2-section {
-      padding: {{ section.settings.padding_top_mb }}px 0 {{ section.settings.padding_bottom_mb }}px;
+      padding: {{ section.settings.padding_top_mb }}px {{ section.settings.padding_right_mb }}px {{ section.settings.padding_bottom_mb }}px {{ section.settings.padding_left_mb }}px;
     }
   }
 
@@ -163,15 +180,33 @@
     padding: 0 20px;
   }
 
-  .mvd-product-2-media, .mvd-product-2-content {
-    flex: 0 0 50%;
-    width: 50%;
+  .mvd-product-2-container.custom-width {
+    max-width: {{ section.settings.custom_width }}px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .mvd-product-2-media {
+    flex: 0 0 var(--mvd-media-width, 50%);
+    width: var(--mvd-media-width, 50%);
+    display: flex;
+    justify-content: var(--mvd-media-align, flex-end);
+    padding: 20px 15px;
+  }
+  
+  .mvd-product-2-content {
+    flex: 0 0 var(--mvd-content-width, 50%);
+    width: var(--mvd-content-width, 50%);
+    display: flex;
+    justify-content: center; /* Always center the block wrapper itself */
   }
 
   @media screen and (max-width: 767px) {
     .mvd-product-2-media, .mvd-product-2-content {
       flex: 0 0 100%;
       width: 100%;
+      justify-content: center; /* Re-center on mobile */
+      padding: 0;
     }
     .mvd-product-2-container.position-right {
        flex-direction: column-reverse;
@@ -205,16 +240,28 @@
     display: block;
   }
 
+  .mvd-product-2-header {
+    flex: 0 0 100%;
+    width: 100%;
+    text-align: center;
+    padding: 0 20px 40px;
+  }
+
+  .mvd-product-2-header-inner {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
   .mvd-product-2-content {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 40px;
-    text-align: center;
+    padding: 20px 15px;
   }
 
   .mvd-product-2-content-inner {
-    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
   }
 
   .mvd-product-2-subtitle {
@@ -242,8 +289,9 @@
   }
 
   .mvd-product-2-featured-item {
-    margin: 30px auto 0;
-    max-width: 320px;
+    margin: 30px 0 0;
+    max-width: 420px;
+    width: 100%;
   }
 
   .mvd-product-2-p-link {
@@ -255,9 +303,20 @@
 
   .mvd-product-2-p-image {
     position: relative;
-    aspect-ratio: 1/1;
     overflow: hidden;
     background-color: #f5f5f5;
+  }
+
+  .mvd-product-2-p-image.ratio-1-1 {
+    aspect-ratio: 1/1;
+  }
+
+  .mvd-product-2-p-image.ratio-4-5 {
+    aspect-ratio: 4/5;
+  }
+
+  .mvd-product-2-p-image.ratio-2-3 {
+    aspect-ratio: 2/3;
   }
 
   .mvd-product-2-small-img {
@@ -287,7 +346,7 @@
 
   .mvd-product-2-p-info {
     margin-top: 15px;
-    text-align: center;
+    text-align: var(--mvd-text-align, left);
   }
 
   .mvd-product-2-p-title {
@@ -302,7 +361,8 @@
   }
 
   .mvd-product-2-cta {
-    margin-top: 30px;
+    margin-top: 20px;
+    text-align: var(--mvd-text-align, left);
   }
 
   .mvd-product-2-button {
@@ -331,6 +391,9 @@
     position: relative;
     width: 100%;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: var(--mvd-content-align, center);
   }
 
   .mvd-product-slider-inner {
@@ -345,59 +408,49 @@
     opacity: 0.3;
     transition: opacity 0.6s ease;
     padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: var(--mvd-content-align, center);
   }
 
   .mvd-product-slide.active {
     opacity: 1;
   }
 
-  .mvd-product-slider-nav {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
+  .mvd-product-slider-dots {
     display: flex;
-    justify-content: space-between;
-    transform: translateY(-50%);
-    pointer-events: none;
-    padding: 0 10px;
+    justify-content: var(--mvd-content-align, center);
+    width: 100%;
+    max-width: 420px;
+    margin: 25px 0 0;
+    gap: 8px;
+    position: relative;
     z-index: 5;
   }
 
-  .mvd-slider-prev, .mvd-slider-next {
-    background-color: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    width: 36px;
-    height: 36px;
+  .mvd-slider-dot {
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
+    background-color: #cccccc;
+    border: none;
+    padding: 0;
     cursor: pointer;
-    color: #1a1a1a;
-    pointer-events: auto;
     transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   }
 
-  .mvd-slider-prev:hover, .mvd-slider-next:hover {
-    background-color: #ffffff;
-    color: #000000;
-    transform: scale(1.1) translateY(-50%);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  .mvd-slider-dot:hover {
+    background-color: #999999;
   }
-  
-  .mvd-slider-prev {
-    transform: translateY(-50%);
-  }
-  
-  .mvd-slider-next {
-    transform: translateY(-50%);
+
+  .mvd-slider-dot.active {
+    background-color: #1a1a1a;
+    transform: scale(1.3);
   }
 
   @media screen and (max-width: 767px) {
-    .mvd-product-slider-nav {
-      padding: 0 5px;
+    .mvd-product-slider-dots {
+      margin-top: 15px;
     }
   }
 
@@ -410,12 +463,19 @@
   @media screen and (max-width: 767px) {
     .mvd-product-2-content {
       padding: 40px 20px;
+      justify-content: center;
     }
     .mvd-product-2-title {
       font-size: 1.5rem;
     }
     .mvd-product-2-featured-item {
       max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .mvd-product-slider-dots {
+      max-width: 100%;
+      margin-top: 15px;
     }
   }
 
@@ -451,15 +511,16 @@
     right: -10px;
     bottom: -10px;
     border-radius: 50%;
-    border: 1px solid currentColor;
+    border: 1.5px solid currentColor;
     opacity: 0;
-    animation: hotspotPulse 2s infinite;
+    animation: hotspotPulse 1.8s ease-out infinite;
     pointer-events: none;
   }
 
   @keyframes hotspotPulse {
-    0% { transform: scale(0.5); opacity: 0.8; }
-    100% { transform: scale(2); opacity: 0; }
+    0% { transform: scale(0.6); opacity: 0; }
+    50% { opacity: 0.6; }
+    100% { transform: scale(1.8); opacity: 0; }
   }
 
   .mvd-hotspot:hover .mvd-hotspot-dot {
@@ -557,9 +618,15 @@
         const slides = container.querySelectorAll('.mvd-product-slide');
         if (!wrapper || slides.length <= 1) return;
 
+        const dots = container.querySelectorAll('.mvd-slider-dot');
+
         const showSlide = (index) => {
           slides.forEach(s => s.classList.remove('active'));
           slides[index].classList.add('active');
+          if (dots.length > 0) {
+            dots.forEach(d => d.classList.remove('active'));
+            dots[index].classList.add('active');
+          }
           
           // Smooth translation
           const translateX = index * -100;
@@ -569,17 +636,50 @@
         let currentSlide = 0;
         const totalSlides = slides.length;
 
-        container.querySelector('.mvd-slider-prev')?.addEventListener('click', (e) => {
-          e.preventDefault();
-          currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-          showSlide(currentSlide);
-        });
+        if (dots.length > 0) {
+          dots.forEach((dot, index) => {
+            dot.addEventListener('click', (e) => {
+              e.preventDefault();
+              currentSlide = index;
+              showSlide(currentSlide);
+            });
+          });
+        }
 
-        container.querySelector('.mvd-slider-next')?.addEventListener('click', (e) => {
-          e.preventDefault();
-          currentSlide = (currentSlide + 1) % totalSlides;
-          showSlide(currentSlide);
-        });
+        // Hotspot click logic
+        const containerRoot = container.closest('.mvd-product-2-container');
+        if (containerRoot) {
+          const hotspots = containerRoot.querySelectorAll('.mvd-hotspot');
+          hotspots.forEach(hotspot => {
+            const dot = hotspot.querySelector('.mvd-hotspot-dot');
+            const card = hotspot.querySelector('.mvd-hotspot-card');
+            
+            const triggerSlideChange = (e) => {
+              const handle = hotspot.getAttribute('data-product-handle');
+              if (handle) {
+                const targetSlideIndex = Array.from(slides).findIndex(s => s.getAttribute('data-product-handle') === handle);
+                if (targetSlideIndex !== -1) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  currentSlide = targetSlideIndex;
+                  showSlide(currentSlide);
+                }
+              }
+            };
+
+            // Remove existing listeners if this is a re-initialization
+            if (dot) {
+              const newDot = dot.cloneNode(true);
+              dot.parentNode.replaceChild(newDot, dot);
+              newDot.addEventListener('click', triggerSlideChange);
+            }
+            if (card) {
+               const newCard = card.cloneNode(true);
+               card.parentNode.replaceChild(newCard, card);
+               newCard.addEventListener('click', triggerSlideChange);
+            }
+          });
+        }
       });
     };
 
@@ -617,11 +717,6 @@
       "content": "Imagen Destacada"
     },
     {
-      "type": "image_picker",
-      "id": "featured_image",
-      "label": "Imagen Principal"
-    },
-    {
       "type": "select",
       "id": "image_position",
       "label": "Posición de imagen",
@@ -641,6 +736,40 @@
         { "value": "square", "label": "Cuadrado (1:1)" },
         { "value": "portrait", "label": "Retrato (2:3)" },
         { "value": "landscape", "label": "Paisaje (4:3)" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "media_width",
+      "label": "Ancho de la imagen principal",
+      "default": "50",
+      "options": [
+        { "value": "40", "label": "Pequeño (40%)" },
+        { "value": "50", "label": "Mediano (50%)" },
+        { "value": "60", "label": "Grande (60%)" },
+        { "value": "70", "label": "Muy Grande (70%)" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "media_alignment",
+      "label": "Alineación Columna Izquierda (Imagen)",
+      "default": "flex-end",
+      "options": [
+        { "value": "flex-start", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "flex-end", "label": "Derecha" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Alineación Columna Derecha (Producto)",
+      "default": "center",
+      "options": [
+        { "value": "flex-start", "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "flex-end", "label": "Derecha" }
       ]
     },
     {
@@ -676,7 +805,29 @@
       "default": "full-width",
       "options": [
         { "value": "full-width", "label": "Ancho Total" },
-        { "value": "page-width", "label": "Ancho de Página" }
+        { "value": "page-width", "label": "Ancho de Página Clásico" },
+        { "value": "custom-width", "label": "Ancho Personalizado" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "custom_width",
+      "min": 800,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "label": "Ancho Personalizado (Desktop)",
+      "default": 1300
+    },
+    {
+      "type": "select",
+      "id": "product_image_ratio",
+      "label": "Relación de aspecto imagen producto",
+      "default": "4-5",
+      "options": [
+        { "value": "1-1", "label": "Cuadrado (1:1)" },
+        { "value": "4-5", "label": "Retrato Vertical (4:5)" },
+        { "value": "2-3", "label": "Retrato (2:3)" }
       ]
     },
     {
@@ -722,6 +873,26 @@
       "default": 0
     },
     {
+      "type": "range",
+      "id": "padding_left",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Izquierdo",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Derecho",
+      "default": 0
+    },
+    {
       "type": "header",
       "content": "Espaciado Móvil"
     },
@@ -744,9 +915,41 @@
       "unit": "px",
       "label": "Padding Inferior Móvil",
       "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_mb",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Izquierdo Móvil",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_right_mb",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Derecho Móvil",
+      "default": 0
     }
   ],
   "blocks": [
+    {
+      "type": "featured_image",
+      "name": "Imagen Principal",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Seleccionar Imagen"
+        }
+      ]
+    },
     {
       "type": "hotspot",
       "name": "Punto de Producto",
@@ -783,17 +986,6 @@
           "default": "#ffffff"
         }
       ]
-    },
-    {
-      "type": "product_slide",
-      "name": "Slide de Producto",
-      "settings": [
-        {
-          "type": "product",
-          "id": "product",
-          "label": "Producto"
-        }
-      ]
     }
   ],
   "presets": [
@@ -801,8 +993,7 @@
       "name": "MVD Product 2",
       "blocks": [
         { "type": "hotspot", "settings": { "pos_x": 45, "pos_y": 40 } },
-        { "type": "hotspot", "settings": { "pos_x": 30, "pos_y": 60 } },
-        { "type": "product_slide" }
+        { "type": "hotspot", "settings": { "pos_x": 30, "pos_y": 60 } }
       ]
     }
   ]

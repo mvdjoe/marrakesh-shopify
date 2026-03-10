@@ -1,31 +1,22 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "mvd_banner_1_HYXfni": {
       "type": "mvd_banner_1",
       "blocks": {
-        "video_hdKGp4": {
+        "video_hAdjKa": {
           "type": "video",
           "settings": {
-            "video_desktop": "shopify://files/videos/Banner Web Marrakesh -  Horizontal.mp4",
-            "video_mobile": "shopify://files/videos/Banner Web.mp4",
+            "video_desktop": "",
+            "video_mobile": "",
             "link_url": "",
             "overlay_opacity": 0,
-            "height_desktop": 600,
-            "height_mobile": 400
+            "height_desktop": 750,
+            "height_mobile": 580
           }
         }
       },
       "block_order": [
-        "video_hdKGp4"
+        "video_hAdjKa"
       ],
       "name": "MVD Banner 1",
       "settings": {
@@ -36,42 +27,230 @@
         "sizing_type": "cover"
       }
     },
+    "mvd_icons_6KwMDh": {
+      "type": "mvd-icons",
+      "blocks": {
+        "icon_block_Ktjp6g": {
+          "type": "icon_block",
+          "settings": {
+            "icon_type": "image",
+            "preset_icon": "necklace",
+            "icon": "shopify://shop_images/earrings_1.png",
+            "label": "Aros",
+            "link": ""
+          }
+        },
+        "icon_block_bCxrkn": {
+          "type": "icon_block",
+          "settings": {
+            "icon_type": "image",
+            "preset_icon": "necklace",
+            "icon": "shopify://shop_images/jewellery.png",
+            "label": "Collares",
+            "link": ""
+          }
+        },
+        "icon_block_mwqExF": {
+          "type": "icon_block",
+          "settings": {
+            "icon_type": "image",
+            "preset_icon": "necklace",
+            "icon": "shopify://shop_images/bangles_1.png",
+            "label": "Pulseras",
+            "link": ""
+          }
+        },
+        "icon_block_mUC8gB": {
+          "type": "icon_block",
+          "settings": {
+            "icon_type": "image",
+            "preset_icon": "necklace",
+            "icon": "shopify://shop_images/jewelery_1.png",
+            "label": "Anillos",
+            "link": ""
+          }
+        },
+        "icon_block_p9EaRV": {
+          "type": "icon_block",
+          "settings": {
+            "icon_type": "image",
+            "preset_icon": "necklace",
+            "icon": "shopify://shop_images/pearl-necklace_1.png",
+            "label": "Tobilleras",
+            "link": ""
+          }
+        },
+        "icon_block_ktKx9G": {
+          "type": "icon_block",
+          "settings": {
+            "icon_type": "image",
+            "preset_icon": "necklace",
+            "icon": "shopify://shop_images/shoulder-bag_1.png",
+            "label": "Accesorios",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "icon_block_Ktjp6g",
+        "icon_block_bCxrkn",
+        "icon_block_mwqExF",
+        "icon_block_mUC8gB",
+        "icon_block_p9EaRV",
+        "icon_block_ktKx9G"
+      ],
+      "name": "MVD Icons",
+      "settings": {
+        "title": "Categorías",
+        "title_size_desktop": 14,
+        "title_size_mobile": 14,
+        "container_width": "container-fluid",
+        "columns_desktop": 6,
+        "columns_mobile": 3,
+        "gap_desktop": 20,
+        "gap_mobile": 20,
+        "tint_image_icons": true,
+        "bg_color": "#ffffff",
+        "text_color": "#000000",
+        "accent_color": "#c89262",
+        "padding_top": 65,
+        "padding_bottom": 50,
+        "padding_left": 0,
+        "padding_right": 0,
+        "padding_top_mb": 60,
+        "padding_bottom_mb": 40,
+        "padding_left_mb": 20,
+        "padding_right_mb": 20
+      }
+    },
+    "mvd_product_1_MGFHgR": {
+      "type": "mvd_product_1",
+      "disabled": true,
+      "name": "MVD Product 1",
+      "settings": {
+        "featured_image": "shopify://shop_images/u2678577971_A_serene_and_stylish_woman_with_natural_curly_hai_15e54676-10ea-4f32-84af-3b93bd1e54a6_1.webp",
+        "image_position": "left",
+        "image_ratio": "square",
+        "subtitle": "Trends & Tradition",
+        "title": "For Everyday Wear",
+        "description": "From dainty classics that are perfect for daily adornment to chic, trendsetting pieces designed to complement any occasion - our selection blends exquisite craftsmanship with modern sensibility.",
+        "featured_product": "aros-argollas-indy-1",
+        "link_text": "Shop",
+        "link_url": "",
+        "layout_width": "page-width",
+        "bg_color": "#ffffff",
+        "text_color": "#734b39",
+        "accent_color": "#1a1a1a",
+        "padding_top": 30,
+        "padding_bottom": 30,
+        "padding_top_mb": 0,
+        "padding_bottom_mb": 0
+      }
+    },
+    "mvd_product_2_NG4wYn": {
+      "type": "mvd_product_2",
+      "blocks": {
+        "hotspot_slide_1": {
+          "type": "hotspot",
+          "settings": {
+            "product": "collar-amatista",
+            "pos_x": 10,
+            "pos_y": 10
+          }
+        },
+        "hotspot_slide_2": {
+          "type": "hotspot",
+          "settings": {
+            "product": "anillo-argolla-lisa",
+            "pos_x": 20,
+            "pos_y": 20
+          }
+        },
+        "hotspot_hwNCcG": {
+          "type": "hotspot",
+          "settings": {
+            "product": "collar-bolitas",
+            "pos_x": 50,
+            "pos_y": 72,
+            "color": "#ffffff"
+          }
+        },
+        "hotspot_3pCCkH": {
+          "type": "hotspot",
+          "settings": {
+            "product": "anillo-argolla-lisa",
+            "pos_x": 69,
+            "pos_y": 31,
+            "color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "hotspot_slide_1",
+        "hotspot_slide_2",
+        "hotspot_hwNCcG",
+        "hotspot_3pCCkH"
+      ],
+      "name": "MVD Product 2",
+      "settings": {
+        "featured_image": "shopify://shop_images/u2678577971_A_serene_and_stylish_woman_with_natural_curly_hai_15e54676-10ea-4f32-84af-3b93bd1e54a6_1.webp",
+        "image_position": "left",
+        "image_ratio": "square",
+        "subtitle": "Trends & Tradition",
+        "title": "For Everyday Wear",
+        "description": "From dainty classics that are perfect for daily adornment to chic, trendsetting pieces desig",
+        "layout_width": "full-width",
+        "bg_color": "#ffffff",
+        "text_color": "#000000",
+        "accent_color": "#1a1a1a",
+        "padding_top": 30,
+        "padding_bottom": 30,
+        "padding_top_mb": 0,
+        "padding_bottom_mb": 0
+      }
+    },
     "mvd_collection_rCMHYP": {
       "type": "mvd-collection",
       "blocks": {
         "banner_9MDJgi": {
           "type": "banner",
           "settings": {
+            "image": "shopify://shop_images/73014966ba1178673da13489827d978e.jpg",
             "link": "shopify://collections/pulseras"
           }
         },
         "banner_yUwcGF": {
           "type": "banner",
           "settings": {
+            "image": "shopify://shop_images/3835a6f2aa2fefd6bf4456371f7f3b9a.jpg",
             "link": "shopify://collections/tobilleras"
           }
         },
         "banner_EPgDX8": {
           "type": "banner",
           "settings": {
+            "image": "shopify://shop_images/470a01af54568258ffb58b3368193958.jpg",
             "link": "shopify://collections/anillos"
           }
         },
         "banner_nMMxfQ": {
           "type": "banner",
           "settings": {
+            "image": "shopify://shop_images/9ae8e2e63a786359a00b6d271cbf0677.jpg",
             "link": "shopify://collections/aros"
           }
         },
         "banner_JPzaPN": {
           "type": "banner",
           "settings": {
+            "image": "shopify://shop_images/a43f7d2e81cc2004af4275a385b68e90.jpg",
             "link": "shopify://collections/collares"
           }
         },
         "banner_abhwUn": {
           "type": "banner",
           "settings": {
+            "image": "shopify://shop_images/13b2097adea2a090d0f83f3d3b4b6654.jpg",
             "link": "shopify://collections/accesorios"
           }
         }
@@ -87,7 +266,7 @@
       "name": "MVD Collections List",
       "settings": {
         "subtitle": "The Collection",
-        "section_heading": "LO NUEVO EN MARRAKESH",
+        "section_heading": "LO NUEVO EN S. MIDDLETON",
         "title_size": 20,
         "subtitle_size": 13,
         "image_ratio": "four-five",
@@ -112,94 +291,6 @@
         "padding_bottom_mb": 30,
         "padding_left_mb": 0,
         "padding_right_mb": 0
-      }
-    },
-    "mvd_product_1_MGFHgR": {
-      "type": "mvd_product_1",
-      "disabled": true,
-      "name": "MVD Product 1",
-      "settings": {
-        "image_position": "left",
-        "image_ratio": "square",
-        "subtitle": "Trends & Tradition",
-        "title": "For Everyday Wear",
-        "description": "From dainty classics that are perfect for daily adornment to chic, trendsetting pieces designed to complement any occasion - our selection blends exquisite craftsmanship with modern sensibility.",
-        "featured_product": "aros-argollas-indy-1",
-        "link_text": "Shop",
-        "link_url": "",
-        "layout_width": "page-width",
-        "bg_color": "#ffffff",
-        "text_color": "#734b39",
-        "accent_color": "#1a1a1a",
-        "padding_top": 30,
-        "padding_bottom": 30,
-        "padding_top_mb": 0,
-        "padding_bottom_mb": 0
-      }
-    },
-    "mvd_product_2_NG4wYn": {
-      "type": "mvd_product_2",
-      "blocks": {
-        "product_slide_gaihA6": {
-          "type": "product_slide",
-          "settings": {
-            "product": "as16"
-          }
-        },
-        "product_slide_4PwTet": {
-          "type": "product_slide",
-          "settings": {
-            "product": "collar-amatista"
-          }
-        },
-        "product_slide_BVbEVy": {
-          "type": "product_slide",
-          "settings": {
-            "product": "anillo-argolla-lisa"
-          }
-        },
-        "hotspot_hwNCcG": {
-          "type": "hotspot",
-          "settings": {
-            "product": "collar-bolitas",
-            "pos_x": 50,
-            "pos_y": 72,
-            "color": "#ffffff"
-          }
-        },
-        "hotspot_3pCCkH": {
-          "type": "hotspot",
-          "settings": {
-            "product": "anillo-argolla-lisa",
-            "pos_x": 69,
-            "pos_y": 31,
-            "color": "#ffffff"
-          }
-        }
-      },
-      "block_order": [
-        "product_slide_gaihA6",
-        "product_slide_4PwTet",
-        "product_slide_BVbEVy",
-        "hotspot_hwNCcG",
-        "hotspot_3pCCkH"
-      ],
-      "name": "MVD Product 2",
-      "settings": {
-        "featured_image": "shopify://shop_images/Exquise_barcelona.webp",
-        "image_position": "left",
-        "image_ratio": "square",
-        "subtitle": "Trends & Tradition",
-        "title": "For Everyday Wear",
-        "description": "From dainty classics that are perfect for daily adornment to chic, trendsetting pieces desig",
-        "layout_width": "full-width",
-        "bg_color": "#ffffff",
-        "text_color": "#000000",
-        "accent_color": "#1a1a1a",
-        "padding_top": 30,
-        "padding_bottom": 30,
-        "padding_top_mb": 0,
-        "padding_bottom_mb": 0
       }
     },
     "mvd_advice_awpLjn": {
@@ -257,7 +348,9 @@
       "type": "mvd-before-after",
       "name": "MVD Before/After",
       "settings": {
+        "before_image": "shopify://shop_images/7033e843046c821f97ce3d3bcb6357a2.jpg",
         "before_label": "Antes",
+        "after_image": "shopify://shop_images/descarga.png",
         "after_label": "Después",
         "container_width": "container-fluid",
         "image_ratio": "natural",
@@ -305,7 +398,7 @@
       "type": "mvd-product-list",
       "name": "MVD Product List",
       "settings": {
-        "animation": "fade-up",
+        "animation": "",
         "setwidth": "container-fluid",
         "bg_color": "#ffffff",
         "subtitle": "NEW IN",
@@ -318,10 +411,10 @@
         "limit": 10,
         "perviewDesktop": 5,
         "spaceBetween": 20,
-        "nowrap": true,
+        "nowrap": false,
         "arrows": true,
         "scrollbar": false,
-        "paddingsection": "50px 0px 50px 0px",
+        "paddingsection": "30px 0px 20px 0px",
         "paddingmobile": "40px 0px 40px 0px"
       }
     },
@@ -331,6 +424,8 @@
         "slide_qyzHrm": {
           "type": "slide",
           "settings": {
+            "image_desktop": "shopify://shop_images/Shopify-Theme-Symmetry-Amara_184_Crop2.webp",
+            "image_mobile": "shopify://shop_images/Shopify-Theme-Symmetry-Amara_184_Crop2.webp",
             "link_url": "",
             "height_desktop": 600,
             "height_mobile": 400,
@@ -355,17 +450,60 @@
         "section_width": "full",
         "sizing_type": "cover"
       }
+    },
+    "mvd_insta_feed": {
+      "type": "mvd-instagram",
+      "blocks": {
+        "item_1": {
+          "type": "item",
+          "settings": {}
+        },
+        "item_2": {
+          "type": "item",
+          "settings": {}
+        },
+        "item_3": {
+          "type": "item",
+          "settings": {}
+        },
+        "item_4": {
+          "type": "item",
+          "settings": {}
+        },
+        "item_5": {
+          "type": "item",
+          "settings": {}
+        },
+        "item_6": {
+          "type": "item",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "item_1",
+        "item_2",
+        "item_3",
+        "item_4",
+        "item_5",
+        "item_6"
+      ],
+      "name": "MVD Instagram",
+      "settings": {
+        "username": "marrakeshchile"
+      }
     }
   },
   "order": [
     "mvd_banner_1_HYXfni",
-    "mvd_collection_rCMHYP",
+    "mvd_icons_6KwMDh",
     "mvd_product_1_MGFHgR",
     "mvd_product_2_NG4wYn",
+    "mvd_collection_rCMHYP",
     "mvd_advice_awpLjn",
     "mvd_before_after_dkr9Xe",
     "93c72a6c-f37d-432e-8104-d1f2a08adc05",
     "mvd_product_list_ALK7LQ",
-    "mvd_banner_2_DCqdjq"
+    "mvd_banner_2_DCqdjq",
+    "mvd_insta_feed"
   ]
 }
