@@ -1,0 +1,655 @@
+{%- style -%}
+  .mvd-new-footer {
+    background-color: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: 0; /* Bottom running bar handles padding */
+    font-family: inherit;
+  }
+  .mvd-new-footer a {
+    color: {{ section.settings.text_color }};
+    text-decoration: none;
+    transition: opacity 0.3s;
+  }
+  .mvd-new-footer a:hover {
+    opacity: 0.7;
+  }
+  .mvd-footer-top {
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+  }
+  .mvd-footer-col {
+    margin-bottom: 30px;
+  }
+  .mvd-footer-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-transform: none; /* Rapsodia keeps some normal case */
+  }
+  .mvd-footer-text {
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+  }
+  .mvd-footer-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .mvd-footer-menu li {
+    margin-bottom: 12px;
+  }
+  .mvd-footer-menu a {
+    font-size: 13px;
+  }
+  .mvd-newsletter-form {
+    position: relative;
+    border-bottom: 1px solid #000;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+  }
+  .mvd-newsletter-input {
+    border: none;
+    background: transparent;
+    width: 100%;
+    padding: 10px 0;
+    font-size: 13px;
+    color: inherit;
+    outline: none;
+    box-shadow: none;
+  }
+  .mvd-newsletter-input::placeholder {
+    color: #888;
+  }
+  .mvd-newsletter-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0 10px;
+  }
+  .mvd-terms-checkbox {
+    display: flex;
+    align-items: flex-start;
+    font-size: 11px;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .mvd-terms-checkbox input {
+    margin-top: 2px;
+  }
+  .mvd-footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    font-size: 11px;
+  }
+  .mvd-footer-marquee {
+    background-color: #212121;
+    color: #fff;
+    padding: 10px 0;
+    font-size: 12px;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+  }
+  .mvd-footer-marquee span {
+    display: inline-block;
+    padding-left: 100%;
+    animation: marquee 20s linear infinite;
+  }
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+  }
+  .mvd-map-container {
+    overflow: hidden;
+    position: relative;
+    border-radius: 4px;
+  }
+  .mvd-map-container iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  @media (max-width: 767px) {
+    .mvd-new-footer { padding-top: {{ section.settings.padding_top_mobile }}px; }
+    .mvd-footer-col { margin-bottom: 40px; }
+    .mvd-footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+  }
+{%- endstyle -%}
+
+<div class="mvd-new-footer" id="mvd-footer-{{ section.id }}">
+  <div class="{%- if section.settings.setwidth == 'container-fluid' -%}container-fluid{%- elsif section.settings.setwidth == 'full' -%}w-100 px-0{%- else -%}container{%- endif -%} pb-2">
+    <div class="mvd-footer-top row justify-content-center">
+      
+      {%- for block in section.blocks -%}
+        {%- liquid
+          case block.settings.width 
+            when '20%' 
+              assign block_width = 'col-lg-2-4 col-md-4 col-6' 
+            when '25%' 
+              assign block_width = 'col-lg-3 col-md-6 col-12' 
+            when '33%' 
+              assign block_width = 'col-lg-4 col-md-6 col-12' 
+            when '50%' 
+              assign block_width = 'col-lg-6 col-md-12 col-12'
+            when '66%' 
+              assign block_width = 'col-lg-8 col-md-12 col-12'
+            when '75%' 
+              assign block_width = 'col-lg-9 col-md-12 col-12'
+            when '100%' 
+              assign block_width = 'col-12' 
+            else
+              if block.type == 'newsletter' or block.type == 'map'
+                assign block_width = 'col-lg-4 col-md-12 col-12'
+              else
+                assign block_width = 'col-lg-2 col-md-4 col-6'
+              endif
+          endcase 
+        -%}
+
+        {%- case block.type -%}
+          {%- when 'newsletter' -%}
+            <div class="{{ block_width }} mvd-footer-col" {{ block.shopify_attributes }}>
+              <div class="mvd-footer-text pr-lg-5">
+                {{ block.settings.text }}
+              </div>
+              
+              {%- form 'customer', id: 'mvd-footer-newsletter' -%}
+                <input type="hidden" name="contact[tags]" value="newsletter">
+                
+                <div class="mvd-newsletter-form">
+                  <input type="email" name="contact[email]" class="mvd-newsletter-input" placeholder="{{ block.settings.placeholder }}" required>
+                  <button type="submit" class="mvd-newsletter-btn">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                  </button>
+                </div>
+                
+                {%- if block.settings.terms_text != blank -%}
+                  <label class="mvd-terms-checkbox">
+                    <input type="checkbox" required>
+                    <span>{{ block.settings.terms_text }}</span>
+                  </label>
+                {%- endif -%}
+                
+                {%- if block.settings.disclaimer != blank -%}
+                  <div class="mvd-footer-text" style="font-size: 10px; opacity: 0.7;">
+                    {{ block.settings.disclaimer }}
+                  </div>
+                {%- endif -%}
+              {%- endform -%}
+            </div>
+          
+          {%- when 'menu' -%}
+            <div class="{{ block_width }} mvd-footer-col" {{ block.shopify_attributes }}>
+              {%- if block.settings.title != blank -%}
+                <h4 class="mvd-footer-title">{{ block.settings.title }}</h4>
+              {%- endif -%}
+              {%- if block.settings.menu != blank -%}
+                <ul class="mvd-footer-menu">
+                  {%- for link in block.settings.menu.links -%}
+                    <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </div>
+            
+          {%- when 'map' -%}
+            <div class="{{ block_width }} mvd-footer-col" {{ block.shopify_attributes }}>
+              {%- if block.settings.title != blank -%}
+                <h4 class="mvd-footer-title">{{ block.settings.title }}</h4>
+              {%- endif -%}
+              <div class="mvd-map-container" style="height: {{ block.settings.map_height }}px;">
+                {%- if block.settings.iframe_code != blank -%}
+                  {{ block.settings.iframe_code }}
+                {%- else -%}
+                  <div style="width: 100%; height: 100%; background: #eaeaea; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #666;">
+                    Configura el Iframe de Google Maps en el editor
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+            
+        {%- endcase -%}
+      {%- endfor -%}
+      
+    </div>
+    
+    <div class="mvd-footer-bottom">
+      <div class="mvd-copyright">
+        {{ section.settings.copyright_text }}
+      </div>
+      
+      {%- if section.settings.show_country_selector -%}
+        <div class="mvd-country-selector">
+          <svg style="width: 14px; height: 14px; display: inline-block; vertical-align: middle; margin-right: 5px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          <span style="vertical-align: middle; cursor: pointer;">País | {{ localization.country.name }}</span>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if section.settings.marquee_text != blank -%}
+    <div class="mvd-footer-marquee">
+      <span>{{ section.settings.marquee_text }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ section.settings.marquee_text }}</span>
+    </div>
+  {%- endif -%}
+</div>
+
+{%- if section.settings.enable_parallax -%}
+{%- unless request.design_mode -%}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const footerSection = document.getElementById('shopify-section-{{ section.id }}');
+  const pageContainer = document.querySelector('.page-container');
+  
+  if (footerSection && pageContainer && footerSection.closest('.page-container')) {
+    // 1. Move footer OUT of pageContainer, strictly adjacent
+    pageContainer.parentNode.insertBefore(footerSection, pageContainer.nextSibling);
+    
+    // 2. Adjust z-indexes so pageContainer overlays the solid footer
+    pageContainer.style.position = 'relative';
+    pageContainer.style.zIndex = '2';
+    
+    const currentBg = window.getComputedStyle(pageContainer).backgroundColor;
+    if (currentBg === 'rgba(0, 0, 0, 0)' || currentBg === 'transparent') {
+       pageContainer.style.backgroundColor = '#ffffff'; 
+    }
+    pageContainer.style.boxShadow = '0 10px 30px rgba(0,0,0,0.05)';
+    
+    footerSection.style.position = 'relative';
+    footerSection.style.zIndex = '1';
+    
+    // Clean up any layout hacking values from previous versions
+    pageContainer.style.paddingBottom = '';
+    pageContainer.style.marginBottom = '';
+    footerSection.style.boxShadow = '';
+    pageContainer.style.transform = '';
+    
+    // 3. Parallax overlap logic
+    const speed = 0.5; // El footer se desliza un 50% mas lento, escondido DETRAS del contenido
+    
+    function onScroll() {
+      const hf = footerSection.offsetHeight;
+      const normalFooterTop = pageContainer.getBoundingClientRect().bottom;
+      
+      // 'y' calcula la distancia real hacia el fondo del documento
+      const y = normalFooterTop - (window.innerHeight - hf);
+      
+      // Cuando estamos muy arriba del footer, y > 0
+      if (y > 0) {
+         // Subimos (offset negativo) el footer por DEBAJO de pageContainer para generar el retraso sin espacios en blanco
+         const offset = y * (speed - 1);
+         footerSection.style.transform = `translate3d(0, ${offset}px, 0)`;
+      } else {
+         // Cuando tocamos el final absoluto del scroll, eliminamos transform para poder clickear el 100%
+         footerSection.style.transform = `translate3d(0, 0, 0)`;
+      }
+    }
+    
+    window.addEventListener('scroll', () => requestAnimationFrame(onScroll), { passive: true });
+    window.addEventListener('resize', () => requestAnimationFrame(onScroll), { passive: true });
+    
+    // Initial trigger
+    onScroll();
+  }
+});
+</script>
+{%- endunless -%}
+{%- endif -%}
+
+
+{%- if section.settings.animation != blank -%}
+  <script>
+    (function(){
+      var sectionEl = document.getElementById('shopify-section-{{ section.id }}');
+      if (sectionEl) {
+        {% if section.settings.animation == 'parallax' %}
+          sectionEl.setAttribute('data-mvd-premium-parallax', 'true');
+        {% else %}
+          sectionEl.setAttribute('data-aos', '{{ section.settings.animation }}');
+        {% endif %}
+      }
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "MVD Rapsodia Footer",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "label": "Seleccionar Animación",
+      "default": "fade-up",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "parallax",
+          "label": "Parallax Scrolling"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Ancho del contenedor",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_parallax",
+      "label": "Efecto Paralaje (Reveal)",
+      "info": "El footer se revelará al hacer scroll desde atrás del contenido. Requiere que el fondo del sitio sea de un color sólido.",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#f9f9f9"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top (Desktop)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top (Mobile)",
+      "default": 40
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Copyright Text",
+      "default": "Rapsodia. Todos los Derechos Reservados ®"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_country_selector",
+      "label": "Show Country/Region Selector Placeholder",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Bottom Marquee Bar"
+    },
+    {
+      "type": "text",
+      "id": "marquee_text",
+      "label": "Running Text",
+      "default": "Envío gratis en todas tus compras a partir de $150.000       3 y 6 cuotas sin interés"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Headline Text",
+          "default": "<p>Suscribite a nuestros newsletters y obtené un 15% off para tu primera compra online!</p>"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Input Placeholder",
+          "default": "email"
+        },
+        {
+          "type": "textarea",
+          "id": "terms_text",
+          "label": "Terms Checkbox Text",
+          "default": "Acepto los Términos, Condiciones y las Políticas de Privacidad de RAPSODIA"
+        },
+        {
+          "type": "select",
+          "id": "width",
+          "label": "Ancho del bloque",
+          "default": "33%",
+          "options": [
+            {
+              "value": "20%",
+              "label": "20%"
+            },
+            {
+              "value": "25%",
+              "label": "25%"
+            },
+            {
+              "value": "33%",
+              "label": "33%"
+            },
+            {
+              "value": "50%",
+              "label": "50%"
+            },
+            {
+              "value": "66%",
+              "label": "66%"
+            },
+            {
+              "value": "75%",
+              "label": "75%"
+            },
+            {
+              "value": "100%",
+              "label": "100%"
+            }
+          ]
+        },
+        {
+          "type": "richtext",
+          "id": "disclaimer",
+          "label": "Disclaimer Text",
+          "default": "<p>*Este descuento no es acumulable con otras promociones.</p>"
+        }
+      ]
+    },
+    {
+      "type": "menu",
+      "name": "Footer Menu",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Help & Info"
+        },
+        {
+          "type": "select",
+          "id": "width",
+          "label": "Ancho del bloque",
+          "default": "20%",
+          "options": [
+            {
+              "value": "20%",
+              "label": "20%"
+            },
+            {
+              "value": "25%",
+              "label": "25%"
+            },
+            {
+              "value": "33%",
+              "label": "33%"
+            },
+            {
+              "value": "50%",
+              "label": "50%"
+            },
+            {
+              "value": "66%",
+              "label": "66%"
+            },
+            {
+              "value": "75%",
+              "label": "75%"
+            },
+            {
+              "value": "100%",
+              "label": "100%"
+            }
+          ]
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu"
+        }
+      ]
+    },
+    {
+      "type": "map",
+      "name": "Google Maps",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Nuestra Ubicación"
+        },
+        {
+          "type": "textarea",
+          "id": "iframe_code",
+          "label": "Código Iframe de Google Maps",
+          "info": "Ve a Google Maps -> Compartir -> Insertar mapa -> Copiar HTML"
+        },
+        {
+          "type": "select",
+          "id": "width",
+          "label": "Ancho del bloque",
+          "default": "33%",
+          "options": [
+            {
+              "value": "20%",
+              "label": "20%"
+            },
+            {
+              "value": "25%",
+              "label": "25%"
+            },
+            {
+              "value": "33%",
+              "label": "33%"
+            },
+            {
+              "value": "50%",
+              "label": "50%"
+            },
+            {
+              "value": "66%",
+              "label": "66%"
+            },
+            {
+              "value": "75%",
+              "label": "75%"
+            },
+            {
+              "value": "100%",
+              "label": "100%"
+            }
+          ]
+        },
+        {
+          "type": "range",
+          "id": "map_height",
+          "min": 150,
+          "max": 500,
+          "step": 10,
+          "unit": "px",
+          "label": "Altura del Mapa",
+          "default": 200
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "MVD Rapsodia Footer",
+      "category": "Footer",
+      "blocks": [
+        {
+          "type": "newsletter"
+        },
+        {
+          "type": "menu"
+        },
+        {
+          "type": "menu"
+        },
+        {
+          "type": "menu"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -145,13 +145,35 @@
   </div>
 </section>
 
-{% schema %}{
+
+{%- if section.settings.animation != blank -%}
+  <script>
+    (function(){
+      var sectionEl = document.getElementById('shopify-section-{{ section.id }}');
+      if (sectionEl) {
+        {% if section.settings.animation == 'parallax' %}
+          sectionEl.setAttribute('data-mvd-premium-parallax', 'true');
+        {% elsif section.settings.animation == 'sticky-reveal' %}
+          sectionEl.setAttribute('data-mvd-sticky-reveal', 'true');
+        {% else %}
+          sectionEl.setAttribute('data-aos', '{{ section.settings.animation }}');
+        {% endif %}
+      }
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+
+{
   "name": "Product list Small",
   "max_blocks": 3,
   "settings": [
     {
       "type": "select",
       "id": "animation",
+      "label": "Seleccionar Animación",
+      "default": "fade-up",
       "options": [
         {
           "value": "",
@@ -170,103 +192,22 @@
           "label": "Fade Down"
         },
         {
-          "value": "fade-left",
-          "label": "Fade Left"
-        },
-        {
-          "value": "fade-right",
-          "label": "Fade Right"
-        },
-        {
-          "value": "fade-up-right",
-          "label": "Fade Up Right"
-        },
-        {
-          "value": "fade-up-left",
-          "label": "Fade Up Left"
-        },
-        {
-          "value": "fade-down-right",
-          "label": "Fade Down Right"
-        },
-        {
-          "value": "fade-down-left",
-          "label": "Fade Down Left"
-        },
-        {
-          "value": "flip-up",
-          "label": "Flip Up"
-        },
-        {
-          "value": "flip-down",
-          "label": "Flip Down"
-        },
-        {
-          "value": "flip-left",
-          "label": "Flip Left"
-        },
-        {
-          "value": "flip-right",
-          "label": "Flip Right"
-        },
-        {
-          "value": "slide-up",
-          "label": "Slide Up"
-        },
-        {
-          "value": "slide-down",
-          "label": "Slide Down"
-        },
-        {
-          "value": "slide-left",
-          "label": "Slide Left"
-        },
-        {
-          "value": "slide-right",
-          "label": "Slide Right"
-        },
-        {
           "value": "zoom-in",
           "label": "Zoom In"
-        },
-        {
-          "value": "zoom-in-up",
-          "label": "Zoom In Up"
-        },
-        {
-          "value": "zoom-in-down",
-          "label": "Zoom In Down"
-        },
-        {
-          "value": "zoom-in-left",
-          "label": "Zoom In Left"
-        },
-        {
-          "value": "zoom-in-right",
-          "label": "Zoom In Right"
         },
         {
           "value": "zoom-out",
           "label": "Zoom Out"
         },
         {
-          "value": "zoom-out-up",
-          "label": "Zoom Out Up"
+          "value": "parallax",
+          "label": "Parallax Scrolling (Slide Over)"
         },
         {
-          "value": "zoom-out-down",
-          "label": "Zoom Out Down"
-        },
-        {
-          "value": "zoom-out-left",
-          "label": "Zoom Out Feft"
-        },
-        {
-          "value": "zoom-out-right",
-          "label": "Zoom Out Right"
+          "value": "sticky-reveal",
+          "label": "Sticky Footer Reveal (Curtain)"
         }
-      ],
-      "label": "Select Animation"
+      ]
     },
     {
       "type": "select",
@@ -580,4 +521,6 @@
       ]
     }
   ]
-}{% endschema %}
+}
+
+{% endschema %}

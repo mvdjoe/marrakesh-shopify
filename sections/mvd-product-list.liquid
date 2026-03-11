@@ -139,7 +139,26 @@
   </div>
 </div>
 
+
+{%- if section.settings.animation != blank -%}
+  <script>
+    (function(){
+      var sectionEl = document.getElementById('shopify-section-{{ section.id }}');
+      if (sectionEl) {
+        {% if section.settings.animation == 'parallax' %}
+          sectionEl.setAttribute('data-mvd-premium-parallax', 'true');
+        {% elsif section.settings.animation == 'sticky-reveal' %}
+          sectionEl.setAttribute('data-mvd-sticky-reveal', 'true');
+        {% else %}
+          sectionEl.setAttribute('data-aos', '{{ section.settings.animation }}');
+        {% endif %}
+      }
+    })();
+  </script>
+{%- endif -%}
+
 {% schema %}
+
 {
   "name": "MVD Product List",
   "class": "index-section",
@@ -150,11 +169,38 @@
       "label": "Seleccionar Animación",
       "default": "fade-up",
       "options": [
-        { "value": "", "label": "None" },
-        { "value": "fade", "label": "Fade" },
-        { "value": "fade-up", "label": "Fade Up" },
-        { "value": "fade-down", "label": "Fade Down" },
-        { "value": "zoom-in", "label": "Zoom In" }
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "parallax",
+          "label": "Parallax Scrolling (Slide Over)"
+        },
+        {
+          "value": "sticky-reveal",
+          "label": "Sticky Footer Reveal (Curtain)"
+        }
       ]
     },
     {
@@ -163,9 +209,18 @@
       "label": "Ancho del contenedor",
       "default": "container",
       "options": [
-        { "value": "container", "label": "Box" },
-        { "value": "container-fluid", "label": "Container Fluid" },
-        { "value": "full", "label": "Full" }
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
       ]
     },
     {
@@ -221,9 +276,18 @@
       "label": "Alineación del Texto",
       "default": "center",
       "options": [
-        { "value": "center", "label": "Center" },
-        { "value": "left", "label": "Left" },
-        { "value": "right", "label": "Right" }
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
       ]
     },
     {
@@ -312,4 +376,5 @@
     }
   ]
 }
+
 {% endschema %}

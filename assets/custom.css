@@ -58,3 +58,23 @@ body.template-index .modal__toggle-open {
     margin-right: auto !important;
   }
 }
+
+/* 7. Custom Parallax AOS Animation */
+[data-aos="parallax"] {
+  opacity: 0;
+  transform: translateY(60px) scale(0.95);
+  transition-property: transform, opacity;
+}
+
+[data-aos="parallax"].aos-animate {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* If the element has a background image, also apply a simple CSS fixed parallax effect */
+.bg-image[data-aos="parallax"].aos-animate,
+[style*="background-image"][data-aos="parallax"].aos-animate {
+  background-attachment: fixed;
+  background-position: center center;
+  background-size: cover;
+}

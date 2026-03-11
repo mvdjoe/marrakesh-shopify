@@ -78,7 +78,7 @@
      {%- liquid
       section 'banner-footer'
       section 'newsletter-footer'
-      section 'footer'
+      section 'mvd-new-footer'
       comment
       if template == 'index' or request.design_mode
       section 'pnewsletter'
@@ -101,5 +101,50 @@
     -%}
     
     {% section 'mvd-popup' %}
+    
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        if (window.Shopify && Shopify.designMode) return;
+        
+        const parallaxSections = document.querySelectorAll('[data-mvd-premium-parallax="true"]');
+        parallaxSections.forEach(section => {
+          let target = null;
+          for (let i = 0; i < section.children.length; i++) {
+              const tag = section.children[i].tagName;
+              if (tag !== 'SCRIPT' && tag !== 'STYLE' && tag !== 'LINK') {
+                  target = section.children[i];
+                  break;
+              }
+          }
+          if (target) {
+             section.style.overflow = 'hidden';
+             target.style.willChange = 'transform';
+             target.style.transform = 'scale(1.1)';
+             section._parallaxTarget = target;
+          }
+        });
+
+        function onScroll() {
+          const windowHeight = window.innerHeight;
+          parallaxSections.forEach(section => {
+            const target = section._parallaxTarget;
+            if (!target) return;
+            
+            const rect = section.getBoundingClientRect();
+            if (rect.top < windowHeight && rect.bottom > 0) {
+              const offset = (rect.top + rect.height / 2) - (windowHeight / 2);
+              const moveAmount = offset * 0.12; 
+              target.style.transform = `scale(1.1) translate3d(0, ${moveAmount}px, 0)`;
+            }
+          });
+        }
+        
+        if (parallaxSections.length > 0) {
+          window.addEventListener('scroll', () => requestAnimationFrame(onScroll), {passive: true});
+          // trigger once on load
+          onScroll();
+        }
+      });
+    </script>
   </body>
 </html>

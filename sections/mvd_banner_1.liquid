@@ -468,12 +468,71 @@
   })();
 </script>
 
+
+{%- if section.settings.animation != blank -%}
+  <script>
+    (function(){
+      var sectionEl = document.getElementById('shopify-section-{{ section.id }}');
+      if (sectionEl) {
+        {% if section.settings.animation == 'parallax' %}
+          sectionEl.setAttribute('data-mvd-premium-parallax', 'true');
+        {% elsif section.settings.animation == 'sticky-reveal' %}
+          sectionEl.setAttribute('data-mvd-sticky-reveal', 'true');
+        {% else %}
+          sectionEl.setAttribute('data-aos', '{{ section.settings.animation }}');
+        {% endif %}
+      }
+    })();
+  </script>
+{%- endif -%}
+
 {% schema %}
+
 {
   "name": "MVD Banner 1",
   "tag": "section",
   "class": "mvd-banner-section",
   "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "label": "Seleccionar Animación",
+      "default": "fade-up",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "parallax",
+          "label": "Parallax Scrolling (Slide Over)"
+        },
+        {
+          "value": "sticky-reveal",
+          "label": "Sticky Footer Reveal (Curtain)"
+        }
+      ]
+    },
     {
       "type": "checkbox",
       "id": "show_scroll_button",
@@ -496,9 +555,18 @@
       "label": "Animación",
       "default": "zoom-out",
       "options": [
-        { "value": "zoom-out", "label": "Zoom-out" },
-        { "value": "fade", "label": "Atenuar" },
-        { "value": "slide-in-left", "label": "Deslizar" }
+        {
+          "value": "zoom-out",
+          "label": "Zoom-out"
+        },
+        {
+          "value": "fade",
+          "label": "Atenuar"
+        },
+        {
+          "value": "slide-in-left",
+          "label": "Deslizar"
+        }
       ]
     },
     {
@@ -507,10 +575,22 @@
       "label": "Ancho",
       "default": "full",
       "options": [
-        { "value": "page-width", "label": "Ancho de página" },
-        { "value": "full", "label": "Pantalla completa" },
-        { "value": "fixed", "label": "Fijo (960px)" },
-        { "value": "fixed-extended", "label": "Extendido (1200px)" }
+        {
+          "value": "page-width",
+          "label": "Ancho de página"
+        },
+        {
+          "value": "full",
+          "label": "Pantalla completa"
+        },
+        {
+          "value": "fixed",
+          "label": "Fijo (960px)"
+        },
+        {
+          "value": "fixed-extended",
+          "label": "Extendido (1200px)"
+        }
       ]
     },
     {
@@ -519,8 +599,14 @@
       "label": "Ajuste de imagen",
       "default": "cover",
       "options": [
-        { "value": "cover", "label": "Cubrir" },
-        { "value": "contain", "label": "Contener" }
+        {
+          "value": "cover",
+          "label": "Cubrir"
+        },
+        {
+          "value": "contain",
+          "label": "Contener"
+        }
       ]
     }
   ],
@@ -622,9 +708,12 @@
     {
       "name": "MVD Banner 1",
       "blocks": [
-        { "type": "slide" }
+        {
+          "type": "slide"
+        }
       ]
     }
   ]
 }
+
 {% endschema %}

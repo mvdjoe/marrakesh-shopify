@@ -179,10 +179,70 @@
     </ul>
   </div>
 {%- endif -%}
-{% schema %}{
+
+{%- if section.settings.animation != blank -%}
+  <script>
+    (function(){
+      var sectionEl = document.getElementById('shopify-section-{{ section.id }}');
+      if (sectionEl) {
+        {% if section.settings.animation == 'parallax' %}
+          sectionEl.setAttribute('data-mvd-premium-parallax', 'true');
+        {% elsif section.settings.animation == 'sticky-reveal' %}
+          sectionEl.setAttribute('data-mvd-sticky-reveal', 'true');
+        {% else %}
+          sectionEl.setAttribute('data-aos', '{{ section.settings.animation }}');
+        {% endif %}
+      }
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+
+{
   "name": "Collection Banner",
   "class": "section",
   "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "label": "Seleccionar Animación",
+      "default": "fade-up",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "parallax",
+          "label": "Parallax Scrolling (Slide Over)"
+        },
+        {
+          "value": "sticky-reveal",
+          "label": "Sticky Footer Reveal (Curtain)"
+        }
+      ]
+    },
     {
       "type": "paragraph",
       "content": "Add a description or image by editing your collection. [Learn more](https://help.shopify.com/manual/products/collections/collection-layout)"
@@ -329,4 +389,6 @@
       "info": "This menu won't show dropdown items"
     }
   ]
-}{% endschema %}
+}
+
+{% endschema %}

@@ -104,9 +104,69 @@
  
   {%- endstyle -%}
 
-{% schema %}{
+
+{%- if section.settings.animation != blank -%}
+  <script>
+    (function(){
+      var sectionEl = document.getElementById('shopify-section-{{ section.id }}');
+      if (sectionEl) {
+        {% if section.settings.animation == 'parallax' %}
+          sectionEl.setAttribute('data-mvd-premium-parallax', 'true');
+        {% elsif section.settings.animation == 'sticky-reveal' %}
+          sectionEl.setAttribute('data-mvd-sticky-reveal', 'true');
+        {% else %}
+          sectionEl.setAttribute('data-aos', '{{ section.settings.animation }}');
+        {% endif %}
+      }
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+
+{
   "name": "Popup newsletter",
   "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "label": "Seleccionar Animación",
+      "default": "fade-up",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "parallax",
+          "label": "Parallax Scrolling (Slide Over)"
+        },
+        {
+          "value": "sticky-reveal",
+          "label": "Sticky Footer Reveal (Curtain)"
+        }
+      ]
+    },
     {
       "type": "checkbox",
       "id": "pnewletter_enable",
@@ -253,4 +313,6 @@
       "label": "Color"
     }
   ]
-}{% endschema %}
+}
+
+{% endschema %}

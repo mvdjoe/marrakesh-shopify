@@ -778,10 +778,69 @@
   })();
 </script>
 
+
+{%- if section.settings.animation != blank -%}
+  <script>
+    (function(){
+      var sectionEl = document.getElementById('shopify-section-{{ section.id }}');
+      if (sectionEl) {
+        {% if section.settings.animation == 'parallax' %}
+          sectionEl.setAttribute('data-mvd-premium-parallax', 'true');
+        {% elsif section.settings.animation == 'sticky-reveal' %}
+          sectionEl.setAttribute('data-mvd-sticky-reveal', 'true');
+        {% else %}
+          sectionEl.setAttribute('data-aos', '{{ section.settings.animation }}');
+        {% endif %}
+      }
+    })();
+  </script>
+{%- endif -%}
+
 {% schema %}
+
 {
   "name": "MVD Product 2",
   "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "label": "Seleccionar Animación",
+      "default": "fade-up",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "parallax",
+          "label": "Parallax Scrolling (Slide Over)"
+        },
+        {
+          "value": "sticky-reveal",
+          "label": "Sticky Footer Reveal (Curtain)"
+        }
+      ]
+    },
     {
       "type": "header",
       "content": "Imagen Destacada"
@@ -792,8 +851,14 @@
       "label": "Posición de imagen",
       "default": "left",
       "options": [
-        { "value": "left", "label": "Izquierda" },
-        { "value": "right", "label": "Derecha" }
+        {
+          "value": "left",
+          "label": "Izquierda"
+        },
+        {
+          "value": "right",
+          "label": "Derecha"
+        }
       ]
     },
     {
@@ -802,10 +867,22 @@
       "label": "Relación de aspecto de imagen",
       "default": "natural",
       "options": [
-        { "value": "natural", "label": "Original (Natural)" },
-        { "value": "square", "label": "Cuadrado (1:1)" },
-        { "value": "portrait", "label": "Retrato (2:3)" },
-        { "value": "landscape", "label": "Paisaje (4:3)" }
+        {
+          "value": "natural",
+          "label": "Original (Natural)"
+        },
+        {
+          "value": "square",
+          "label": "Cuadrado (1:1)"
+        },
+        {
+          "value": "portrait",
+          "label": "Retrato (2:3)"
+        },
+        {
+          "value": "landscape",
+          "label": "Paisaje (4:3)"
+        }
       ]
     },
     {
@@ -814,10 +891,22 @@
       "label": "Ancho de la imagen principal",
       "default": "50",
       "options": [
-        { "value": "40", "label": "Pequeño (40%)" },
-        { "value": "50", "label": "Mediano (50%)" },
-        { "value": "60", "label": "Grande (60%)" },
-        { "value": "70", "label": "Muy Grande (70%)" }
+        {
+          "value": "40",
+          "label": "Pequeño (40%)"
+        },
+        {
+          "value": "50",
+          "label": "Mediano (50%)"
+        },
+        {
+          "value": "60",
+          "label": "Grande (60%)"
+        },
+        {
+          "value": "70",
+          "label": "Muy Grande (70%)"
+        }
       ]
     },
     {
@@ -826,9 +915,18 @@
       "label": "Alineación Columna Izquierda (Imagen)",
       "default": "flex-end",
       "options": [
-        { "value": "flex-start", "label": "Izquierda" },
-        { "value": "center", "label": "Centro" },
-        { "value": "flex-end", "label": "Derecha" }
+        {
+          "value": "flex-start",
+          "label": "Izquierda"
+        },
+        {
+          "value": "center",
+          "label": "Centro"
+        },
+        {
+          "value": "flex-end",
+          "label": "Derecha"
+        }
       ]
     },
     {
@@ -837,9 +935,18 @@
       "label": "Alineación Columna Derecha (Producto)",
       "default": "center",
       "options": [
-        { "value": "flex-start", "label": "Izquierda" },
-        { "value": "center", "label": "Centro" },
-        { "value": "flex-end", "label": "Derecha" }
+        {
+          "value": "flex-start",
+          "label": "Izquierda"
+        },
+        {
+          "value": "center",
+          "label": "Centro"
+        },
+        {
+          "value": "flex-end",
+          "label": "Derecha"
+        }
       ]
     },
     {
@@ -874,9 +981,18 @@
       "label": "Ancho de sección",
       "default": "full-width",
       "options": [
-        { "value": "full-width", "label": "Ancho Total" },
-        { "value": "page-width", "label": "Ancho de Página Clásico" },
-        { "value": "custom-width", "label": "Ancho Personalizado" }
+        {
+          "value": "full-width",
+          "label": "Ancho Total"
+        },
+        {
+          "value": "page-width",
+          "label": "Ancho de Página Clásico"
+        },
+        {
+          "value": "custom-width",
+          "label": "Ancho Personalizado"
+        }
       ]
     },
     {
@@ -895,9 +1011,18 @@
       "label": "Relación de aspecto imagen producto",
       "default": "4-5",
       "options": [
-        { "value": "1-1", "label": "Cuadrado (1:1)" },
-        { "value": "4-5", "label": "Retrato Vertical (4:5)" },
-        { "value": "2-3", "label": "Retrato (2:3)" }
+        {
+          "value": "1-1",
+          "label": "Cuadrado (1:1)"
+        },
+        {
+          "value": "4-5",
+          "label": "Retrato Vertical (4:5)"
+        },
+        {
+          "value": "2-3",
+          "label": "Retrato (2:3)"
+        }
       ]
     },
     {
@@ -1062,10 +1187,23 @@
     {
       "name": "MVD Product 2",
       "blocks": [
-        { "type": "hotspot", "settings": { "pos_x": 45, "pos_y": 40 } },
-        { "type": "hotspot", "settings": { "pos_x": 30, "pos_y": 60 } }
+        {
+          "type": "hotspot",
+          "settings": {
+            "pos_x": 45,
+            "pos_y": 40
+          }
+        },
+        {
+          "type": "hotspot",
+          "settings": {
+            "pos_x": 30,
+            "pos_y": 60
+          }
+        }
       ]
     }
   ]
 }
+
 {% endschema %}
