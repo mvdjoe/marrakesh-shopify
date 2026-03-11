@@ -34,7 +34,10 @@
         </div>
       {%- else -%}
         <div class="mvd-product-1-placeholder ratio-{{ image_ratio }}">
-          {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          <div class="mvd-placeholder-container">
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            <span>Imagen Principal</span>
+          </div>
         </div>
       {%- endif -%}
     </div>

@@ -243,8 +243,9 @@
                     {%- assign image_url = block.settings.image | img_url: '600x' -%}
                     <img src="{{ image_url }}" alt="{{ block.settings.link | escape }}">
                   {%- else -%}
-                    <div class="placeholder-image">
+                    <div class="mvd-placeholder-container">
                       {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                      <span>Módulo de Categoría</span>
                     </div>
                   {%- endif -%}
                 </a>
@@ -264,8 +265,9 @@
                 {%- assign image_url = block.settings.image | img_url: '600x' -%}
                 <img src="{{ image_url }}" alt="{{ block.settings.link | escape }}">
               {%- else -%}
-                <div class="placeholder-image">
+                <div class="mvd-placeholder-container">
                   {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                  <span>Módulo de Categoría</span>
                 </div>
               {%- endif -%}
             </a>

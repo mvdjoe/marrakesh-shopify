@@ -47,6 +47,7 @@
                 {% else %}
                   <div class="mvd-banner-placeholder">
                     {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                    <span>Módulo de Imagen</span>
                   </div>
                 {% endif %}
 
@@ -101,7 +102,7 @@
                   {%- if video_desktop != blank -%}
                     {{ video_desktop | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, class: 'mvd-banner-video ' | append: sizing_type }}
                   {%- else -%}
-                    <div class="mvd-banner-placeholder">Video Desktop Placeholder</div>
+                    <div class="mvd-banner-placeholder">Módulo de Video (Escritorio)</div>
                   {%- endif -%}
                 </div>
 
@@ -111,7 +112,7 @@
                   {%- elsif video_desktop != blank -%}
                      {{ video_desktop | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, class: 'mvd-banner-video ' | append: sizing_type }}
                   {%- else -%}
-                    <div class="mvd-banner-placeholder">Video Mobile Placeholder</div>
+                    <div class="mvd-banner-placeholder">Módulo de Video (Móvil)</div>
                   {%- endif -%}
                 </div>
 
@@ -294,12 +295,29 @@
 
   .mvd-banner-placeholder {
     width: 100%;
-    height: 500px;
-    background-color: #e0e0e0;
+    height: 100%;
+    min-height: 400px;
+    background-color: #111111;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: #666;
+    color: #ffffff;
+    gap: 15px;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .mvd-banner-placeholder span {
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .mvd-banner-placeholder .placeholder-svg {
+    max-width: 80px;
+    height: auto;
   }
 
   /* Content Styling */

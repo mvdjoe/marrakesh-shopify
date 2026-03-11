@@ -112,7 +112,10 @@
               {% if block.settings.image != blank %}
                   <img src="{{ block.settings.image | image_url: width: 1920 }}" width="auto" height="auto" loading="lazy" alt="">
               {%- else -%}
-                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                  <div class="mvd-placeholder-container">
+                    {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                    <span>Banner de Estilo</span>
+                  </div>
               {% endif %}
               <div class="banner-content-position d-flex align-items-{{ block.settings.box_col }} justify-content-{{ block.settings.box_row }}">
                   <div class="banner-product-content text-{{ block.settings.text_align }}">

@@ -1946,14 +1946,27 @@
   }
   {%- elsif  layout_header == 'logo-center-navigation-drawer' -%}
     .col-logo{
-        flex:3;
+        flex: 1;
         justify-content: center;
+        order: 0;
     }
     .toggle-menu-mobile{
-        flex:1;
+        flex: 1;
+        justify-content: flex-start;
     }
     .col-bottom__right{
-        flex:1;
+        flex: 1;
+        justify-content: flex-end;
+    }
+    @media (max-width: 991px) {
+      .row-header {
+        flex-wrap: nowrap !important;
+      }
+      .col-logo {
+        width: auto !important;
+        flex: 1 !important;
+        padding-top: 0 !important;
+      }
     }
   @media (min-width: 1000px) {
     .logo-center-navigation-drawer .header-bottom{

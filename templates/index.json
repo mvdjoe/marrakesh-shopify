@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "mvd_banner_1_HYXfni": {
@@ -6,8 +15,6 @@
         "video_hAdjKa": {
           "type": "video",
           "settings": {
-            "video_desktop": "",
-            "video_mobile": "",
             "link_url": "",
             "overlay_opacity": 0,
             "height_desktop": 750,
@@ -193,7 +200,6 @@
       ],
       "name": "MVD Product 2",
       "settings": {
-        "featured_image": "shopify://shop_images/u2678577971_A_serene_and_stylish_woman_with_natural_curly_hai_15e54676-10ea-4f32-84af-3b93bd1e54a6_1.webp",
         "image_position": "left",
         "image_ratio": "square",
         "subtitle": "Trends & Tradition",
@@ -400,7 +406,6 @@
       "settings": {
         "animation": "",
         "setwidth": "container-fluid",
-        "bg_color": "#ffffff",
         "subtitle": "NEW IN",
         "title": "",
         "title_size": 20,
