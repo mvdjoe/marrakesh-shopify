@@ -868,8 +868,6 @@ html:not(.no-js) .slideshow.slick-initialized .slideshow__slide{
       if (sectionEl) {
         {% if section.settings.animation == 'parallax' %}
           sectionEl.setAttribute('data-mvd-premium-parallax', 'true');
-        {% elsif section.settings.animation == 'sticky-reveal' %}
-          sectionEl.setAttribute('data-mvd-sticky-reveal', 'true');
         {% else %}
           sectionEl.setAttribute('data-aos', '{{ section.settings.animation }}');
         {% endif %}
@@ -879,7 +877,6 @@ html:not(.no-js) .slideshow.slick-initialized .slideshow__slide{
 {%- endif -%}
 
 {% schema %}
-
 {
   "name": "Slideshow 2",
   "class": "index-section index-section--slideshow",
@@ -917,11 +914,7 @@ html:not(.no-js) .slideshow.slick-initialized .slideshow__slide{
         },
         {
           "value": "parallax",
-          "label": "Parallax Scrolling (Slide Over)"
-        },
-        {
-          "value": "sticky-reveal",
-          "label": "Sticky Footer Reveal (Curtain)"
+          "label": "Parallax Scrolling"
         }
       ]
     },
@@ -1369,5 +1362,4 @@ html:not(.no-js) .slideshow.slick-initialized .slideshow__slide{
     }
   ]
 }
-
 {% endschema %}

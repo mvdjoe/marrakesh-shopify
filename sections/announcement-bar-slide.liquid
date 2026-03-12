@@ -140,6 +140,9 @@
                           <div class="swiper-slide rte m-0">
                               <div class="py-2 my-1 {{ section.settings.size_text }}">
                               {{ block.settings.code }} 
+                              {% if block.settings.subtitle != blank %}
+                                <div class="announcement-subtitle mt-1" style="font-size: 0.85em; opacity: 0.8;">{{ block.settings.subtitle }}</div>
+                              {% endif %}
                               {% if block.settings.button_text != blank %} 
                               <a class="d-inline-block px-2" href="{{ block.settings.button_link }}">{{ block.settings.button_text }}</a> 
                               {% endif %}
@@ -152,7 +155,12 @@
                   <div class="swiper-button-next"></div>
               </div>
           </div>
-          <div class="col-lg-3 d-none d-lg-flex justify-content-end">
+          <div class="col-lg-3 d-none d-lg-flex justify-content-end align-items-center">
+            {% if section.settings.text_right != blank %}
+              <div class="announcement-text-right {{ section.settings.size_text }} mr-3">
+                {{ section.settings.text_right }}
+              </div>
+            {% endif %}
             <div class="d-none d-lg-flex align-items-center {{ section.settings.size_text }}">
               {%- liquid
                 assign enable_image = section.settings.enable_image
@@ -183,6 +191,9 @@
                   height="{{ block.settings.image.height }}">
               {% endif %}  
               {{ block.settings.code }} 
+              {% if block.settings.subtitle != blank %}
+                <span class="announcement-subtitle mx-2" style="font-size: 0.85em; opacity: 0.8;">{{ block.settings.subtitle }}</span>
+              {% endif %}
                 {% if block.settings.button_text != blank %} 
                 <a class="d-inline-block px-2 link" href="{{ block.settings.button_link }}">
                   {{ block.settings.button_text }}</a> 
@@ -219,7 +230,7 @@
 {% schema %}
 
 {
-  "name": "Announcement bar",
+  "name": "MVD Header Bar",
   "settings": [
     {
       "type": "checkbox",
@@ -399,6 +410,11 @@
       "label": "Text left"
     },
     {
+      "type": "textarea",
+      "id": "text_right",
+      "label": "Text right"
+    },
+    {
       "type": "header",
       "content": "Language selector",
       "info": "To add a language, go to your [language settings.](/admin/settings/languages)"
@@ -425,6 +441,11 @@
           "id": "code",
           "label": "HTML and Text",
           "default": "Use HTML to format your text so it can be easily read."
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle / Additional Text"
         },
         {
           "type": "text",

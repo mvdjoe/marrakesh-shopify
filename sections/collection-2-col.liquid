@@ -301,26 +301,7 @@
         </div>
     </div>
 </div>
-
-{%- if section.settings.animation != blank -%}
-  <script>
-    (function(){
-      var sectionEl = document.getElementById('shopify-section-{{ section.id }}');
-      if (sectionEl) {
-        {% if section.settings.animation == 'parallax' %}
-          sectionEl.setAttribute('data-mvd-premium-parallax', 'true');
-        {% elsif section.settings.animation == 'sticky-reveal' %}
-          sectionEl.setAttribute('data-mvd-sticky-reveal', 'true');
-        {% else %}
-          sectionEl.setAttribute('data-aos', '{{ section.settings.animation }}');
-        {% endif %}
-      }
-    })();
-  </script>
-{%- endif -%}
-
 {% schema %}
-
 {
   "name": "Collection 2 col",
   "tag": "section",
@@ -358,11 +339,7 @@
         },
         {
           "value": "parallax",
-          "label": "Parallax Scrolling (Slide Over)"
-        },
-        {
-          "value": "sticky-reveal",
-          "label": "Sticky Footer Reveal (Curtain)"
+          "label": "Parallax Scrolling"
         }
       ]
     },
@@ -629,5 +606,4 @@
     }
   ]
 }
-
 {% endschema %}

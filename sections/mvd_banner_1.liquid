@@ -97,8 +97,8 @@
     </div>
     {%- if section.settings.show_scroll_button -%}
       <button class="mvd-banner-scroll-btn" type="button" aria-label="Scroll down">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M11 11.2C9.5 8.5 6.5 6.5 3 6.5C3 11 6 13 8 13.5C7 16 5 18 3 19C7.5 19 10 16.5 11 14.5V11.2ZM13 11.2C14.5 8.5 17.5 6.5 21 6.5C21 11 18 13 16 13.5C17 16 19 18 21 19C16.5 19 14 16.5 13 14.5V11.2Z" />
         </svg>
       </button>
     {%- endif -%}
@@ -476,8 +476,6 @@
       if (sectionEl) {
         {% if section.settings.animation == 'parallax' %}
           sectionEl.setAttribute('data-mvd-premium-parallax', 'true');
-        {% elsif section.settings.animation == 'sticky-reveal' %}
-          sectionEl.setAttribute('data-mvd-sticky-reveal', 'true');
         {% else %}
           sectionEl.setAttribute('data-aos', '{{ section.settings.animation }}');
         {% endif %}
@@ -487,7 +485,6 @@
 {%- endif -%}
 
 {% schema %}
-
 {
   "name": "MVD Banner 1",
   "tag": "section",
@@ -525,11 +522,7 @@
         },
         {
           "value": "parallax",
-          "label": "Parallax Scrolling (Slide Over)"
-        },
-        {
-          "value": "sticky-reveal",
-          "label": "Sticky Footer Reveal (Curtain)"
+          "label": "Parallax Scrolling"
         }
       ]
     },
@@ -715,5 +708,4 @@
     }
   ]
 }
-
 {% endschema %}

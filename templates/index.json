@@ -12,21 +12,23 @@
     "mvd_banner_1_HYXfni": {
       "type": "mvd_banner_1",
       "blocks": {
-        "video_hAdjKa": {
-          "type": "video",
+        "slide_f3Xtri": {
+          "type": "slide",
           "settings": {
+            "image_desktop": "shopify://shop_images/756ac732a61388fbb3013ca3d048e64e.jpg",
+            "image_mobile": "shopify://shop_images/756ac732a61388fbb3013ca3d048e64e.jpg",
             "link_url": "",
-            "overlay_opacity": 0,
-            "height_desktop": 750,
-            "height_mobile": 580
+            "height_desktop": 650,
+            "height_mobile": 650
           }
         }
       },
       "block_order": [
-        "video_hAdjKa"
+        "slide_f3Xtri"
       ],
       "name": "MVD Banner 1",
       "settings": {
+        "animation": "parallax",
         "show_scroll_button": true,
         "autoplay_speed": 15,
         "animation_type": "zoom-out",
@@ -34,185 +36,122 @@
         "sizing_type": "cover"
       }
     },
-    "mvd_icons_6KwMDh": {
-      "type": "mvd-icons",
+    "mvd_menu_products_cpzykM": {
+      "type": "mvd-menu-products",
       "blocks": {
-        "icon_block_Ktjp6g": {
-          "type": "icon_block",
+        "collection_paf6gz": {
+          "type": "collection",
           "settings": {
-            "icon_type": "image",
-            "preset_icon": "necklace",
-            "icon": "shopify://shop_images/earrings_1.png",
-            "label": "Aros",
-            "link": ""
+            "title": "Top",
+            "collection": "marcas-exclusivas"
           }
         },
-        "icon_block_bCxrkn": {
-          "type": "icon_block",
+        "collection_VdfRTB": {
+          "type": "collection",
           "settings": {
-            "icon_type": "image",
-            "preset_icon": "necklace",
-            "icon": "shopify://shop_images/jewellery.png",
-            "label": "Collares",
-            "link": ""
+            "title": "Bottom",
+            "collection": "marcas-exclusivas"
           }
         },
-        "icon_block_mwqExF": {
-          "type": "icon_block",
+        "collection_mkMrbz": {
+          "type": "collection",
           "settings": {
-            "icon_type": "image",
-            "preset_icon": "necklace",
-            "icon": "shopify://shop_images/bangles_1.png",
-            "label": "Pulseras",
-            "link": ""
+            "title": "",
+            "collection": ""
           }
         },
-        "icon_block_mUC8gB": {
-          "type": "icon_block",
+        "collection_ygxhnt": {
+          "type": "collection",
           "settings": {
-            "icon_type": "image",
-            "preset_icon": "necklace",
-            "icon": "shopify://shop_images/jewelery_1.png",
-            "label": "Anillos",
-            "link": ""
-          }
-        },
-        "icon_block_p9EaRV": {
-          "type": "icon_block",
-          "settings": {
-            "icon_type": "image",
-            "preset_icon": "necklace",
-            "icon": "shopify://shop_images/pearl-necklace_1.png",
-            "label": "Tobilleras",
-            "link": ""
-          }
-        },
-        "icon_block_ktKx9G": {
-          "type": "icon_block",
-          "settings": {
-            "icon_type": "image",
-            "preset_icon": "necklace",
-            "icon": "shopify://shop_images/shoulder-bag_1.png",
-            "label": "Accesorios",
-            "link": ""
+            "title": "",
+            "collection": ""
           }
         }
       },
       "block_order": [
-        "icon_block_Ktjp6g",
-        "icon_block_bCxrkn",
-        "icon_block_mwqExF",
-        "icon_block_mUC8gB",
-        "icon_block_p9EaRV",
-        "icon_block_ktKx9G"
+        "collection_paf6gz",
+        "collection_VdfRTB",
+        "collection_mkMrbz",
+        "collection_ygxhnt"
       ],
-      "name": "MVD Icons",
+      "name": "MVD Menu Products",
       "settings": {
-        "title": "Categorías",
-        "title_size_desktop": 14,
-        "title_size_mobile": 14,
-        "container_width": "container-fluid",
-        "columns_desktop": 6,
-        "columns_mobile": 3,
-        "gap_desktop": 20,
-        "gap_mobile": 20,
-        "tint_image_icons": true,
+        "animation": "",
+        "setwidth": "container-fluid",
         "bg_color": "#ffffff",
-        "text_color": "#000000",
-        "accent_color": "#c89262",
-        "padding_top": 65,
-        "padding_bottom": 50,
-        "padding_left": 0,
-        "padding_right": 0,
-        "padding_top_mb": 60,
-        "padding_bottom_mb": 40,
-        "padding_left_mb": 20,
-        "padding_right_mb": 20
+        "image_ratio": "2-3",
+        "subtitle": "COLECCIÓN OTOÑO - INVIERNO",
+        "title": "THE COZY SEASON",
+        "title_size": 32,
+        "subtitle_size": 13,
+        "limit": 12,
+        "show": 4,
+        "autoplay": true,
+        "autoplay_speed": 5,
+        "show_arrows": true,
+        "show_view_all": true,
+        "paddingsection": "60px 0px 60px 0px",
+        "paddingmobile": "50px 0px 50px 0px"
       }
     },
-    "mvd_product_1_MGFHgR": {
-      "type": "mvd_product_1",
-      "disabled": true,
-      "name": "MVD Product 1",
-      "settings": {
-        "featured_image": "shopify://shop_images/u2678577971_A_serene_and_stylish_woman_with_natural_curly_hai_15e54676-10ea-4f32-84af-3b93bd1e54a6_1.webp",
-        "image_position": "left",
-        "image_ratio": "square",
-        "subtitle": "Trends & Tradition",
-        "title": "For Everyday Wear",
-        "description": "From dainty classics that are perfect for daily adornment to chic, trendsetting pieces designed to complement any occasion - our selection blends exquisite craftsmanship with modern sensibility.",
-        "featured_product": "aros-argollas-indy-1",
-        "link_text": "Shop",
-        "link_url": "",
-        "layout_width": "page-width",
-        "bg_color": "#ffffff",
-        "text_color": "#734b39",
-        "accent_color": "#1a1a1a",
-        "padding_top": 30,
-        "padding_bottom": 30,
-        "padding_top_mb": 0,
-        "padding_bottom_mb": 0
-      }
-    },
-    "mvd_product_2_NG4wYn": {
+    "mvd_product_2_QdRgW4": {
       "type": "mvd_product_2",
       "blocks": {
-        "hotspot_slide_1": {
-          "type": "hotspot",
+        "featured_image_p63T7p": {
+          "type": "featured_image",
           "settings": {
-            "product": "collar-amatista",
-            "pos_x": 10,
-            "pos_y": 10
+            "image": "shopify://shop_images/14ca50e49d8cbeb0904cb4f8cbe7f22a.jpg"
           }
         },
-        "hotspot_slide_2": {
+        "hotspot_xbV7cL": {
           "type": "hotspot",
           "settings": {
-            "product": "anillo-argolla-lisa",
-            "pos_x": 20,
-            "pos_y": 20
-          }
-        },
-        "hotspot_hwNCcG": {
-          "type": "hotspot",
-          "settings": {
-            "product": "collar-bolitas",
-            "pos_x": 50,
-            "pos_y": 72,
+            "product": "as30",
+            "pos_x": 45,
+            "pos_y": 40,
             "color": "#ffffff"
           }
         },
-        "hotspot_3pCCkH": {
+        "hotspot_pKGHCf": {
           "type": "hotspot",
           "settings": {
-            "product": "anillo-argolla-lisa",
-            "pos_x": 69,
-            "pos_y": 31,
+            "product": "as1",
+            "pos_x": 30,
+            "pos_y": 60,
             "color": "#ffffff"
           }
         }
       },
       "block_order": [
-        "hotspot_slide_1",
-        "hotspot_slide_2",
-        "hotspot_hwNCcG",
-        "hotspot_3pCCkH"
+        "featured_image_p63T7p",
+        "hotspot_xbV7cL",
+        "hotspot_pKGHCf"
       ],
       "name": "MVD Product 2",
       "settings": {
+        "animation": "parallax",
         "image_position": "left",
-        "image_ratio": "square",
-        "subtitle": "Trends & Tradition",
-        "title": "For Everyday Wear",
-        "description": "From dainty classics that are perfect for daily adornment to chic, trendsetting pieces desig",
-        "layout_width": "full-width",
+        "image_ratio": "portrait",
+        "media_width": "50",
+        "media_alignment": "flex-end",
+        "content_alignment": "center",
+        "subtitle": "NUEVA COLECCIÓN",
+        "title": "SHOP THE LOOK",
+        "description": "",
+        "layout_width": "custom-width",
+        "custom_width": 1000,
+        "product_image_ratio": "4-5",
         "bg_color": "#ffffff",
-        "text_color": "#000000",
+        "text_color": "#1a1a1a",
         "accent_color": "#1a1a1a",
-        "padding_top": 30,
-        "padding_bottom": 30,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_left": 0,
+        "padding_right": 0,
         "padding_top_mb": 0,
-        "padding_bottom_mb": 0
+        "padding_bottom_mb": 0,
+        "padding_left_mb": 0,
+        "padding_right_mb": 0
       }
     },
     "mvd_collection_rCMHYP": {
@@ -221,42 +160,42 @@
         "banner_9MDJgi": {
           "type": "banner",
           "settings": {
-            "image": "shopify://shop_images/73014966ba1178673da13489827d978e.jpg",
+            "image": "shopify://shop_images/74e5d88c37127dacf582c6fb655621bd.jpg",
             "link": "shopify://collections/pulseras"
           }
         },
         "banner_yUwcGF": {
           "type": "banner",
           "settings": {
-            "image": "shopify://shop_images/3835a6f2aa2fefd6bf4456371f7f3b9a.jpg",
+            "image": "shopify://shop_images/b948120b7591b69f4217c2e4df703086.jpg",
             "link": "shopify://collections/tobilleras"
           }
         },
         "banner_EPgDX8": {
           "type": "banner",
           "settings": {
-            "image": "shopify://shop_images/470a01af54568258ffb58b3368193958.jpg",
+            "image": "shopify://shop_images/f309f914156d5418ae254362d3867f0c.jpg",
             "link": "shopify://collections/anillos"
           }
         },
         "banner_nMMxfQ": {
           "type": "banner",
           "settings": {
-            "image": "shopify://shop_images/9ae8e2e63a786359a00b6d271cbf0677.jpg",
+            "image": "shopify://shop_images/ecb3a629dc6ab1f8466fec6dcf5266fa.jpg",
             "link": "shopify://collections/aros"
           }
         },
         "banner_JPzaPN": {
           "type": "banner",
           "settings": {
-            "image": "shopify://shop_images/a43f7d2e81cc2004af4275a385b68e90.jpg",
+            "image": "shopify://shop_images/12b0bdd2592c81aeeefc77c14fa195a0.jpg",
             "link": "shopify://collections/collares"
           }
         },
         "banner_abhwUn": {
           "type": "banner",
           "settings": {
-            "image": "shopify://shop_images/13b2097adea2a090d0f83f3d3b4b6654.jpg",
+            "image": "shopify://shop_images/55f56545e1aa00f7a319937a44142ae7.jpg",
             "link": "shopify://collections/accesorios"
           }
         }
@@ -271,20 +210,21 @@
       ],
       "name": "MVD Collections List",
       "settings": {
-        "subtitle": "The Collection",
-        "section_heading": "LO NUEVO EN S. MIDDLETON",
+        "animation": "parallax",
+        "subtitle": "@marrakeshchile",
+        "section_heading": "LO NUEVO EN MARRAKESH",
         "title_size": 20,
         "subtitle_size": 13,
-        "image_ratio": "four-five",
+        "image_ratio": "portrait",
         "layout": "full-width",
         "mobile_columns": 2,
-        "desktop_columns": 3,
+        "desktop_columns": 4,
         "enable_slider_desktop": true,
         "enable_slider_mobile": true,
-        "slider_columns_desktop": 3,
+        "slider_columns_desktop": 4,
         "enable_infinite_scroll": true,
         "enable_autoplay": true,
-        "autoplay_delay": 3,
+        "autoplay_delay": 2,
         "peek_offset_desktop": 0,
         "peek_offset_mobile": 0,
         "gap_desktop": 20,
@@ -299,149 +239,24 @@
         "padding_right_mb": 0
       }
     },
-    "mvd_advice_awpLjn": {
-      "type": "mvd-advice",
-      "blocks": {
-        "text_block_6nLBFa": {
-          "type": "text_block",
-          "settings": {
-            "text": "¡Nueva Colección Disponible!",
-            "link": ""
-          }
-        },
-        "text_block_zqtFad": {
-          "type": "text_block",
-          "settings": {
-            "text": "¡ENVÍO GRATIS EN COMPRAS SUPERIORES A $100.000!",
-            "link": "shopify://collections/all"
-          }
-        },
-        "text_block_MdfaiL": {
-          "type": "text_block",
-          "settings": {
-            "text": "SOLO POR HOY: 15% DE DESCUENTO EN TODO EL SITIO",
-            "link": ""
-          }
-        },
-        "text_block_9iJaNM": {
-          "type": "text_block",
-          "settings": {
-            "text": "NUEVAS PIEZAS DE JOYERÍA ARTESANAL",
-            "link": "shopify://collections"
-          }
-        }
-      },
-      "block_order": [
-        "text_block_6nLBFa",
-        "text_block_zqtFad",
-        "text_block_MdfaiL",
-        "text_block_9iJaNM"
-      ],
-      "name": "MVD Advice (Marquee)",
-      "settings": {
-        "bg_color": "#f9f9f9",
-        "text_color": "#1a1a1a",
-        "font_size_desktop": 14,
-        "font_size_mobile": 12,
-        "uppercase": true,
-        "speed": 30,
-        "gap": 60,
-        "padding_vertical": 15,
-        "pause_on_hover": true
-      }
-    },
-    "mvd_before_after_dkr9Xe": {
-      "type": "mvd-before-after",
-      "name": "MVD Before/After",
-      "settings": {
-        "before_image": "shopify://shop_images/7033e843046c821f97ce3d3bcb6357a2.jpg",
-        "before_label": "Antes",
-        "after_image": "shopify://shop_images/descarga.png",
-        "after_label": "Después",
-        "container_width": "container-fluid",
-        "image_ratio": "natural",
-        "section_height": 600,
-        "section_height_mb": 400,
-        "handle_color": "#ffffff",
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
-    "93c72a6c-f37d-432e-8104-d1f2a08adc05": {
-      "type": "product-list",
-      "disabled": true,
-      "custom_css": [
-        "@media (max-width: 576px) {.product-card__name {padding-top: 20px; }}"
-      ],
-      "settings": {
-        "animation": "",
-        "setwidth": "container-fluid",
-        "bgsection": "#ffffff",
-        "countdown_header": "",
-        "title_top": "",
-        "title": "",
-        "des": "",
-        "button_bottom": "",
-        "link_button_bottom": "shopify://collections/black-week",
-        "align-heading": "center",
-        "collection": "aros",
-        "arrows": true,
-        "draggable": true,
-        "dots": false,
-        "infinite": false,
-        "border_content": false,
-        "rows": "1",
-        "style_section": "style_1",
-        "limit": 16,
-        "show": 5,
-        "paddingsection": "40px 30px 0px 30px",
-        "paddingmobile": "20px 0px 0px 0px",
-        "marginsection": "0px 0px 0px 0px",
-        "marginmobile": "0px 0px 0px 0px"
-      }
-    },
-    "mvd_product_list_ALK7LQ": {
-      "type": "mvd-product-list",
-      "name": "MVD Product List",
-      "settings": {
-        "animation": "",
-        "setwidth": "container-fluid",
-        "subtitle": "NEW IN",
-        "title": "",
-        "title_size": 20,
-        "subtitle_size": 15,
-        "des": "",
-        "align-heading": "center",
-        "collection": "aros",
-        "limit": 10,
-        "perviewDesktop": 5,
-        "spaceBetween": 20,
-        "nowrap": false,
-        "arrows": true,
-        "scrollbar": false,
-        "paddingsection": "30px 0px 20px 0px",
-        "paddingmobile": "40px 0px 40px 0px"
-      }
-    },
     "mvd_banner_2_DCqdjq": {
       "type": "mvd_banner_2",
       "blocks": {
         "slide_qyzHrm": {
           "type": "slide",
           "settings": {
-            "image_desktop": "shopify://shop_images/Shopify-Theme-Symmetry-Amara_184_Crop2.webp",
-            "image_mobile": "shopify://shop_images/Shopify-Theme-Symmetry-Amara_184_Crop2.webp",
+            "image_desktop": "shopify://shop_images/12312313.png",
             "link_url": "",
             "height_desktop": 600,
             "height_mobile": 400,
-            "title": "HAND MADE",
-            "text": "<p>Escribe aquí la desadasdaacripción de tu banner.</p>",
-            "button_label": "shop",
-            "button_link": "shopify://collections/collares",
+            "title": "",
+            "text": "",
+            "button_label": "",
+            "button_link": "",
             "title_color": "#ffffff",
             "text_color": "#ffffff",
             "text_animation": "zoom-in",
-            "overlay_opacity": 20
+            "overlay_opacity": 0
           }
         }
       },
@@ -450,65 +265,19 @@
       ],
       "name": "MVD Banner 2",
       "settings": {
-        "autoplay_speed": 5,
-        "animation_type": "slide-in-left",
+        "animation": "sticky-reveal",
+        "autoplay_speed": 8,
+        "animation_type": "zoom-out",
         "section_width": "full",
         "sizing_type": "cover"
-      }
-    },
-    "mvd_insta_feed": {
-      "type": "mvd-instagram",
-      "blocks": {
-        "item_1": {
-          "type": "item",
-          "settings": {}
-        },
-        "item_2": {
-          "type": "item",
-          "settings": {}
-        },
-        "item_3": {
-          "type": "item",
-          "settings": {}
-        },
-        "item_4": {
-          "type": "item",
-          "settings": {}
-        },
-        "item_5": {
-          "type": "item",
-          "settings": {}
-        },
-        "item_6": {
-          "type": "item",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "item_1",
-        "item_2",
-        "item_3",
-        "item_4",
-        "item_5",
-        "item_6"
-      ],
-      "name": "MVD Instagram",
-      "settings": {
-        "username": "marrakeshchile"
       }
     }
   },
   "order": [
     "mvd_banner_1_HYXfni",
-    "mvd_icons_6KwMDh",
-    "mvd_product_1_MGFHgR",
-    "mvd_product_2_NG4wYn",
+    "mvd_menu_products_cpzykM",
+    "mvd_product_2_QdRgW4",
     "mvd_collection_rCMHYP",
-    "mvd_advice_awpLjn",
-    "mvd_before_after_dkr9Xe",
-    "93c72a6c-f37d-432e-8104-d1f2a08adc05",
-    "mvd_product_list_ALK7LQ",
-    "mvd_banner_2_DCqdjq",
-    "mvd_insta_feed"
+    "mvd_banner_2_DCqdjq"
   ]
 }

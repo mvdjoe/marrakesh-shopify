@@ -506,8 +506,6 @@
       if (sectionEl) {
         {% if section.settings.animation == 'parallax' %}
           sectionEl.setAttribute('data-mvd-premium-parallax', 'true');
-        {% elsif section.settings.animation == 'sticky-reveal' %}
-          sectionEl.setAttribute('data-mvd-sticky-reveal', 'true');
         {% else %}
           sectionEl.setAttribute('data-aos', '{{ section.settings.animation }}');
         {% endif %}
@@ -517,7 +515,6 @@
 {%- endif -%}
 
 {% schema %}
-
 {
   "name": "Advanced Content",
   "max_blocks": 12,
@@ -554,11 +551,7 @@
         },
         {
           "value": "parallax",
-          "label": "Parallax Scrolling (Slide Over)"
-        },
-        {
-          "value": "sticky-reveal",
-          "label": "Sticky Footer Reveal (Curtain)"
+          "label": "Parallax Scrolling"
         }
       ]
     },
@@ -1667,5 +1660,4 @@
     }
   ]
 }
-
 {% endschema %}

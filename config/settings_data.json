@@ -2026,6 +2026,7 @@
         "type": "header",
         "custom_css": [],
         "settings": {
+          "animation": "fade-up",
           "logo_home": "shopify://shop_images/Logo_White.png",
           "logo_hover": "shopify://shop_images/Logo_Black.png",
           "logo_general": "shopify://shop_images/Logo_Black.png",
@@ -2038,8 +2039,8 @@
           "height_header_mobile": 60,
           "setwidth": "container-fluid",
           "layout_header": "logo-center-navigation-left",
-          "type_sticky": "none",
-          "height_header": "normal",
+          "type_sticky": "sticky",
+          "height_header": "small",
           "topbarbg": "#292929",
           "topborderbg": "#eeeeee",
           "textcolor-top": "#222222",
@@ -2093,6 +2094,7 @@
       "cookie-policy": {
         "type": "cookie-policy",
         "settings": {
+          "animation": "fade-up",
           "enable_cookie_policy": false,
           "cookie_style": "style-2",
           "cookie_background": "#222222",
@@ -2309,14 +2311,75 @@
           "fcebf777-fc9c-4934-a103-4228c195f582",
           "96fa1ba2-600b-4138-90c2-bf903be331e1"
         ],
-        "settings": {}
+        "settings": {
+          "animation": "fade-up"
+        }
       },
       "mvd-popup": {
         "type": "mvd-popup",
         "settings": {
+          "animation": "fade-up",
           "title": "¡Estamos de vacaciones!",
           "subtitle": "<p></p><p></p><p>Debido a una pausa por <strong>vacaciones,</strong> los pedidos serán enviados después del<strong> 22 de Septiembre.</strong></p>",
           "frequency": "never"
+        }
+      },
+      "mvd-new-footer": {
+        "type": "mvd-new-footer",
+        "blocks": {
+          "map_JzLTtE": {
+            "type": "map",
+            "settings": {
+              "title": "Nuestra Ubicación",
+              "iframe_code": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3331.5749995081032!2d-70.57494402408578!3d-33.38215997341658!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c928f3755f1d%3A0xe6598e0547c0e559!2sMarrakesh!5e0!3m2!1ses-419!2scl!4v1773255103484!5m2!1ses-419!2scl\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+              "width": "25%",
+              "map_height": 200
+            }
+          },
+          "menu_hEJBWb": {
+            "type": "menu",
+            "settings": {
+              "title": "Help & Info",
+              "width": "20%",
+              "menu": "footer"
+            }
+          },
+          "menu_piqCfp": {
+            "type": "menu",
+            "settings": {
+              "title": "Help & Info",
+              "width": "20%",
+              "menu": "menu-navegac-on"
+            }
+          },
+          "newsletter_zt94ac": {
+            "type": "newsletter",
+            "settings": {
+              "text": "<p>Suscribite a nuestros newsletters y obtené un 15% off para tu primera compra online!</p>",
+              "placeholder": "email",
+              "terms_text": "Acepto los Términos, Condiciones y las Políticas de Privacidad de RAPSODIA",
+              "width": "25%",
+              "disclaimer": ""
+            }
+          }
+        },
+        "block_order": [
+          "map_JzLTtE",
+          "menu_hEJBWb",
+          "menu_piqCfp",
+          "newsletter_zt94ac"
+        ],
+        "settings": {
+          "animation": "parallax",
+          "setwidth": "container",
+          "enable_parallax": true,
+          "bg_color": "#f9f9f9",
+          "text_color": "#1a1a1a",
+          "padding_top": 100,
+          "padding_top_mobile": 40,
+          "copyright_text": "Rapsodia. Todos los Derechos Reservados ®",
+          "show_country_selector": true,
+          "marquee_text": "Envío gratis en todas tus compras a partir de $150.000       3 y 6 cuotas sin interés"
         }
       }
     },
